@@ -1,6 +1,6 @@
 .env
 .venv
 .vscode
-.flight_cache
+.flight_cache.sqlite
 aaaaaaaaa/
 Photos/
