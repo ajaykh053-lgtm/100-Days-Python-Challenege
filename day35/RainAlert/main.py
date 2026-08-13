@@ -11,10 +11,11 @@ WEATHER_API = os.environ["WEATHER_API"]
 API_KEY = os.environ["API_KEY"]
 #mine
 # "lat": 14.403139,
-#     "lon": 76.437060,
+# "lon": 76.437060,
+#if you did't gt email try to find place where its gonna rain from google add there lat & lon you will get email for sure.
 parameter = {
-    "lat": 22.572645,
-    "lon": 88.363892,
+    "lat": 14.403139,
+    "lon": 76.437060,
     "cnt": 4,
     "units": "metric",
     "appid": API_KEY,
