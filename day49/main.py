@@ -19,7 +19,7 @@ chrome_option.add_experimental_option("detach", True)
 
 # Create a folder for the Chrome Profile Selenium will use every time.
 
-user_data_dir = os.path.join(os.getcwd(), "chrome_profile")
+user_data_dir = os.path.join(os.getcwd(), "chrome_profileforday49")
 
 # include double -- for command line argument to Chrome.
 
