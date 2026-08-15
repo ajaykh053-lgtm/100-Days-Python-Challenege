@@ -1,5 +1,4 @@
 import os
-from time import sleep
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -57,6 +56,9 @@ Submit_login = driver.find_element(by=By.ID, value="submit-button")
 Submit_login.click()
 # Wait for schedule page to load
 wait.until(ec.presence_of_element_located((By.ID,"schedule-page")))
-Class_timing = driver.find_elements(by=By.CSS_SELECTOR,value="p[id^='class-time-']")
+Class_timing = driver.find_elements(by=By.CSS_SELECTOR,value="div[id^='day-group-tue']")
 for time in Class_timing:
-    print(time.text)
+    timings = time.find_element(by=By.CSS_SELECTOR,value="p[id^='class-time-']")
+    print(timings.text)
+    print(timings.tag_name)
+    print(timings.get_attribute("id"))
