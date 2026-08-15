@@ -143,7 +143,8 @@ def get_my_bookings():
 all_cards = retry(get_my_bookings, description="Get my bookings")
 
 verified_count = 0
-
+# Dont worry about the below error its just showing beacuse there is no data available in all_cards variable
+# beacuse the function is not called and there is nothig returned and stored in it.
 for card in all_cards:
     try:
         when_paragraph = card.find_element(By.XPATH, ".//p[strong[text()='When:']]")
