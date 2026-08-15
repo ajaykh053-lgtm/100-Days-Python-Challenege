@@ -8,7 +8,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 load_dotenv()
 
-def Booking_details(booked_count,waitlist_count,already_booked_count):
+
+def Booking_details(booked_count, waitlist_count, already_booked_count):
     print("--- BOOKING SUMMARY ---")
     print(f"Classes booked: {booked_count}")
     print(f"Waitlists joined: {waitlist_count}")
@@ -16,9 +17,13 @@ def Booking_details(booked_count,waitlist_count,already_booked_count):
     print(
         f"Total Tuesday 6pm classes processed: {booked_count+waitlist_count+already_booked_count}"
     )
+
+
 def what_happend_details(what_happend):
     print("--- DETAILED CLASS LIST ---")
     print(f"{what_happend}")
+
+
 # ----------------  Step 1 - Setup, Chrome Profile and Basic Navigation ----------------
 
 
@@ -70,7 +75,7 @@ class_cards = driver.find_elements(By.CSS_SELECTOR, "div[id^='class-card-']")
 booked_count = 0
 waitlist_count = 0
 already_booked_count = 1
-what_happend=None
+what_happend = None
 for card in class_cards:
     # Get the day title from the parent day group
     day_group = card.find_element(
@@ -109,5 +114,5 @@ for card in class_cards:
                 waitlist_count += 1
                 # Wait a moment for the button state to update
                 time.sleep(0.5)
-            Booking_details(booked_count,waitlist_count,already_booked_count)
+            Booking_details(booked_count, waitlist_count, already_booked_count)
             what_happend_details(what_happend)
