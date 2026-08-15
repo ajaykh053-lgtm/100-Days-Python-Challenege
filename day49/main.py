@@ -70,6 +70,7 @@ class_cards = driver.find_elements(By.CSS_SELECTOR, "div[id^='class-card-']")
 booked_count = 0
 waitlist_count = 0
 already_booked_count = 1
+what_happend=None
 for card in class_cards:
     # Get the day title from the parent day group
     day_group = card.find_element(
