@@ -115,5 +115,5 @@ for card in class_cards:
                 waitlist_count += 1
                 # Wait a moment for the button state to update
                 time.sleep(0.5)
-            Booking_details(booked_count, waitlist_count, already_booked_count)
-            what_happend_details(what_happend)
+Booking_details(booked_count, waitlist_count, already_booked_count)
+what_happend_details(what_happend)           
