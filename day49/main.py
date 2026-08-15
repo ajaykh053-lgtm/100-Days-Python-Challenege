@@ -37,19 +37,19 @@ def retry(func, retries=7, description=None):
             if i == retries - 1:
                 raise
             time.sleep(1)
-
-
 def login():
-    Login_join = driver.find_element(by=By.CLASS_NAME, value="Home_heroButton__3eeI3")
-    Login_join.click()
+    login_button = driver.find_element(by=By.CLASS_NAME, value="Home_heroButton__3eeI3")
+    login_button.click()
 
     # Using WebDriverWait operations to wait for some time to load website
     wait.until(ec.presence_of_element_located((By.ID, "login-page")))
 
     # Filling the from.
     Enter_email = driver.find_element(by=By.NAME, value="email")
+    Enter_email.clear()
     Enter_email.send_keys(os.environ["ACCOUNT_EMAIL"])
     Enter_pass = driver.find_element(by=By.NAME, value="password")
+    Enter_pass.clear()
     Enter_pass.send_keys(os.environ["ACCOUNT_PASSWORD"])
 
     # Click to Login
@@ -57,20 +57,20 @@ def login():
     Submit_login.click()
     # Wait for schedule page to load
     wait.until(ec.presence_of_element_located((By.ID, "schedule-page")))
-
-
 def book_class(booking_button):
     booking_button.click()
     wait.until(
         lambda d: booking_button.text == "Booked" or booking_button.text == "Waitlisted"
     )
 
+retry(login, description="login")
 
 class_cards = driver.find_elements(By.CSS_SELECTOR, "div[id^='class-card-']")
 booked_count = 0
 waitlist_count = 0
 already_booked_count = 0
 what_happend = None
+
 for card in class_cards:
     # Get the day title from the parent day group
     day_group = card.find_element(
@@ -109,10 +109,10 @@ for card in class_cards:
                 waitlist_count += 1
                 # Wait a moment for the button state to update
                 time.sleep(0.5)
+
 total_booked = already_booked_count + booked_count + waitlist_count
 print(f"\n--- Total Tuesday/Thursday 6pm classes: {total_booked} ---")
 print("\n--- VERIFYING ON MY BOOKINGS PAGE ---")
-
 
 def get_my_bookings():
     global verified_count
@@ -127,9 +127,8 @@ def get_my_bookings():
         raise TimeoutException("No booking cards found - page may not have loaded")
     return cards
 
-
-verified_count = 0
 all_cards = retry(get_my_bookings, description="Get my bookings")
+verified_count = 0
 for card in all_cards:
     try:
         when_paragraph = card.find_element(By.XPATH, ".//p[strong[text()='When:']]")
