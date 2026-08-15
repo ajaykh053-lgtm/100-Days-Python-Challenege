@@ -1,4 +1,5 @@
 import os
+import time
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -36,16 +37,6 @@ Login_join.click()
 # Using WebDriverWait operations to wait for some time to load website
 wait = WebDriverWait(driver=driver, timeout=2)
 
-# Sample Login details
-# Email = driver.find_element(by=By.XPATH,value="/html/body/div/main/div/div[1]/div[1]/p[1]")
-# password = driver.find_element(by=By.XPATH,value="/html/body/div/main/div/div[1]/div[1]/p[2]")
-# # print(Email_text)
-# # print(password.text)
-# Email_id = Email.text.split(": ",1)[1]
-# Password = password.text.split(": ",1)[1]
-# # print(Email_id)
-# # print(Password)
-
 # Filling the from.
 Enter_email = driver.find_element(by=By.NAME, value="email")
 Enter_email.send_keys(os.environ["ACCOUNT_EMAIL"])
@@ -64,7 +55,9 @@ wait.until(ec.presence_of_element_located((By.ID, "schedule-page")))
 
 # Find all class cards
 class_cards = driver.find_elements(By.CSS_SELECTOR, "div[id^='class-card-']")
-
+booked_count = 0
+waitlist_count = 0
+already_booked_count = 1
 for card in class_cards:
     # Get the day title from the parent day group
     day_group = card.find_element(
@@ -81,9 +74,30 @@ for card in class_cards:
             class_name = card.find_element(
                 By.CSS_SELECTOR, "h3[id^='class-name-']"
             ).text
-
             # Find and click the book button
             button = card.find_element(By.CSS_SELECTOR, "button[id^='book-button-']")
-            button.click()
-
-            print(f"✓ Booked: {class_name} on {day_title}")
+            if button.text == "Booked":
+                print(f"✓ Already booked: {class_name} on {day_title}")
+                already_booked_count += 1
+            elif button.text == "Waitlisted":
+                print(f"✓ Already on waitlist: {class_name} on {day_title}")
+                already_booked_count += 1
+            elif button.text == "Book Class":
+                button.click()
+                print(f"✓ Successfully booked: {class_name} on {day_title}")
+                booked_count += 1
+                # Wait a moment for the button state to update
+                time.sleep(0.5)
+            elif button.text == "Join Waitlist":
+                button.click()
+                print(f"✓ Joined waitlist for: {class_name} on {day_title}")
+                waitlist_count += 1
+                # Wait a moment for the button state to update
+                time.sleep(0.5)
+print("--- BOOKING SUMMARY ---")
+print(f"Classes booked: {booked_count}")
+print(f"Waitlists joined: {waitlist_count}")
+print(f"Already booked/waitlisted: {already_booked_count}")
+print(
+    f"Total Tuesday 6pm classes processed: {booked_count+waitlist_count+already_booked_count}"
+)
