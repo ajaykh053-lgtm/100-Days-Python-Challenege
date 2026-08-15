@@ -7,6 +7,18 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 load_dotenv()
+
+def Booking_details(booked_count,waitlist_count,already_booked_count):
+    print("--- BOOKING SUMMARY ---")
+    print(f"Classes booked: {booked_count}")
+    print(f"Waitlists joined: {waitlist_count}")
+    print(f"Already booked/waitlisted: {already_booked_count}")
+    print(
+        f"Total Tuesday 6pm classes processed: {booked_count+waitlist_count+already_booked_count}"
+    )
+def what_happend_details(what_happend):
+    print("--- DETAILED CLASS LIST ---")
+    print(f"{what_happend}")
 # ----------------  Step 1 - Setup, Chrome Profile and Basic Navigation ----------------
 
 
@@ -66,7 +78,7 @@ for card in class_cards:
     day_title = day_group.find_element(By.TAG_NAME, "h2").text
 
     # Check if this is a Tuesday
-    if "Tue" in day_title:
+    if "Tue" in day_title or "Thu" in day_title:
         # Check if this is a 6pm class
         time_text = card.find_element(By.CSS_SELECTOR, "p[id^='class-time-']").text
         if "6:00 PM" in time_text:
@@ -85,19 +97,16 @@ for card in class_cards:
             elif button.text == "Book Class":
                 button.click()
                 print(f"✓ Successfully booked: {class_name} on {day_title}")
+                what_happend = f"• [New Booking] {class_name} on {day_title}"
                 booked_count += 1
                 # Wait a moment for the button state to update
                 time.sleep(0.5)
             elif button.text == "Join Waitlist":
                 button.click()
                 print(f"✓ Joined waitlist for: {class_name} on {day_title}")
+                what_happend = f"• [Joined Waitlist] {class_name} on {day_title}"
                 waitlist_count += 1
                 # Wait a moment for the button state to update
                 time.sleep(0.5)
-print("--- BOOKING SUMMARY ---")
-print(f"Classes booked: {booked_count}")
-print(f"Waitlists joined: {waitlist_count}")
-print(f"Already booked/waitlisted: {already_booked_count}")
-print(
-    f"Total Tuesday 6pm classes processed: {booked_count+waitlist_count+already_booked_count}"
-)
+            Booking_details(booked_count,waitlist_count,already_booked_count)
+            what_happend_details(what_happend)
