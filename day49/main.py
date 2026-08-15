@@ -53,6 +53,7 @@ Login_join.click()
 
 # Using WebDriverWait operations to wait for some time to load website
 wait = WebDriverWait(driver=driver, timeout=2)
+wait.until(ec.presence_of_element_located((By.ID, "login-page")))
 
 # Filling the from.
 Enter_email = driver.find_element(by=By.NAME, value="email")
