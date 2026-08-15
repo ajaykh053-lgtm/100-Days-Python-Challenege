@@ -6,7 +6,10 @@ from dotenv import load_dotenv
 load_dotenv()
 now = dt.datetime.now()
 weekday = now.weekday()
-if weekday == 0:
+#if you want to get the email or the msg you need to change the if condition comment out whole if and then print the weekday
+#then change condition you good to go
+# print(weekday)
+if weekday == 5:
     # -----------------Getting a random quote from file--------------------#
     with open(file="day32/motivationalmonday/quotes.txt") as Quotefile:
         global RANDOM_QUOTE
