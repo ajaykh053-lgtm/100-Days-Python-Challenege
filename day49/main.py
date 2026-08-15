@@ -56,9 +56,10 @@ Submit_login = driver.find_element(by=By.ID, value="submit-button")
 Submit_login.click()
 # Wait for schedule page to load
 wait.until(ec.presence_of_element_located((By.ID,"schedule-page")))
-Class_timing = driver.find_elements(by=By.CSS_SELECTOR,value="div[id^='day-group-tue']")
-for time in Class_timing:
-    timings = time.find_element(by=By.CSS_SELECTOR,value="p[id^='class-time-']")
-    print(timings.text)
-    print(timings.tag_name)
-    print(timings.get_attribute("id"))
+day_title = driver.find_element(by=By.CSS_SELECTOR,value="h2[id^='day-group-tue']")
+Class_timing = driver.find_elements(by=By.CSS_SELECTOR,value="h2[id^='day-group-tue']")
+for classes in Class_timing:
+    timings = classes.find_elements(by=By.CSS_SELECTOR,value="p[id^='class-time-']")
+for time in timings:
+    print(day_title.text)
+    print(time.text)
