@@ -48,12 +48,15 @@ wait = WebDriverWait(driver=driver, timeout=2)
 # # print(Password)
 
 #Filling the from.
-Enter_email = driver.find_element(by=By.ID, value="email-input")
+Enter_email = driver.find_element(by=By.NAME, value="email")
 Enter_email.send_keys(os.environ["ACCOUNT_EMAIL"])
-Enter_pass = driver.find_element(by=By.ID, value="password-input")
+Enter_pass = driver.find_element(by=By.NAME, value="password")
 Enter_pass.send_keys(os.environ["ACCOUNT_PASSWORD"])
 #Click to Login
 Submit_login = driver.find_element(by=By.ID, value="submit-button")
 Submit_login.click()
 # Wait for schedule page to load
 wait.until(ec.presence_of_element_located((By.ID,"schedule-page")))
+Class_timing = driver.find_elements(by=By.CSS_SELECTOR,value="p[id^='class-time-']")
+for time in Class_timing:
+    print(time.text)
