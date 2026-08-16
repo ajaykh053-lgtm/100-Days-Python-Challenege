@@ -12,9 +12,9 @@ load_dotenv()
 chrome_option = webdriver.ChromeOptions()
 chrome_option.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=chrome_option)
-wait = WebDriverWait(driver=driver, timeout=2)
+wait = WebDriverWait(driver=driver, timeout=3)
 driver.get(os.environ["TINDER"])
-
+sleep(2)
 # Step 1 — open the login modal and click Facebark
 create_acc_btn = driver.find_element(by=By.CLASS_NAME, value="tindog-cta-create")
 create_acc_btn.click()
@@ -51,17 +51,29 @@ sleep(1)
 driver.find_element(by=By.CLASS_NAME, value="btn-primary").click()  # Accept_cookies_btn
 sleep(1)
 # Step 4 — like all 20 dogs
+liked_dog=0
 for n in range(20):
-    sleep(1)
+    sleep(3)
+    # Check for match popup first
     try:
-        Like_btn = driver.find_element(by=By.CLASS_NAME, value="btn-like")
-        Like_btn.click()
-    except ElementClickInterceptedException:
-        try:
-            driver.find_element(by=By.CSS_SELECTOR, value=".match-pop a").click()
-        except NoSuchElementException:
-            sleep(2)
-    except NoSuchElementException:
+        match = driver.find_element(
+            By.CSS_SELECTOR, 'a[href="/services/tindog/dismiss-match"]'
+        )
+        driver.execute_script("arguments[0].click();", match)
+        print("Match dismissed, going back for more...")
         sleep(2)
-
+        continue  # skip this iteration's like, start fresh
+    except NoSuchElementException:
+        pass  # No popup, safe to like
+    # Like the current dog
+    try:
+        sleep(3)
+        like_btn = driver.find_element(By.CLASS_NAME, "btn-like")
+        like_btn.click()
+        liked_dog += 1
+        print(f"Liked dog #{liked_dog}")
+    except (NoSuchElementException, ElementClickInterceptedException):
+        print("Like button not found or intercepted waiting 5 seconds")
+        sleep(5)
+    # print(n)
 # driver.quit()
