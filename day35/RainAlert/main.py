@@ -14,14 +14,12 @@ API_KEY = os.environ["API_KEY"]
 # "lon": 76.437060,
 #if you did't gt email try to find place where its gonna rain from google add there lat & lon you will get email for sure.
 parameter = {
-    "lat": 14.403139,
-    "lon": 76.437060,
+    "lat": 25.0759,
+    "lon": 121.3145,
     "cnt": 4,
     "units": "metric",
     "appid": API_KEY,
 }
-
-
 respones = requests.get(url=WEATHER_API, params=parameter)
 respones.raise_for_status()
 weather_data = respones.json()
