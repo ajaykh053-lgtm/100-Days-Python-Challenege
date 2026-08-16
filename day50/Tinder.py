@@ -15,6 +15,7 @@ driver = webdriver.Chrome(options=chrome_option)
 wait = WebDriverWait(driver=driver, timeout=3)
 driver.get(os.environ["TINDER"])
 sleep(2)
+
 # Step 1 — open the login modal and click Facebark
 create_acc_btn = driver.find_element(by=By.CLASS_NAME, value="tindog-cta-create")
 create_acc_btn.click()
