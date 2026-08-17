@@ -33,7 +33,6 @@ five_min = time() + 60 * 2
 
 # print(Cookies_element.tag_name)
 # print(Cookie_count)
-i=0
 while True:
     Cookie_button.click()
     if time() > timeout:
@@ -41,7 +40,7 @@ while True:
             products = driver.find_elements(by=By.CSS_SELECTOR, value="div[id^='product']")
             best_item = None
             for product in reversed(products):
-                if "enabled" in product.get_attribute("class"):
+                if "enabled" in product.get_attribute("class"): #type: ignore
                     best_item = product
                     break
             # print(best_item.tag_name)
@@ -65,3 +64,4 @@ while True:
                 print("Cookies count could not found")
                 break
 
+#https://ozh.github.io/cookieclicker/
