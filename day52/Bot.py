@@ -2,8 +2,9 @@ import os
 from time import sleep
 from dotenv import load_dotenv
 from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 load_dotenv()
 SIMILAR_NAME = "chefsteps"
@@ -47,6 +48,10 @@ class InstaFollower:
         
     def follow(self):
         self.follower_list = self.driver.find_element(by=By.CSS_SELECTOR,value=".followers-scroll")
+        self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", self.follower_list)
+        sleep(1)
+        self.follower_list.send_keys(Keys.PAGE_DOWN)
+        self.follower_list.send_keys(Keys.PAGE_DOWN)
         self.follow_btn = self.driver.find_elements(by=By.XPATH,value="/html/body/div[2]/div/div[3]/div/button")
         print(len(self.follow_btn))
         for btn in reversed(self.follow_btn):
