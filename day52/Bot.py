@@ -44,13 +44,16 @@ class InstaFollower:
         self.follower = self.driver.find_element(by=By.CSS_SELECTOR,value=".naan-followers-link")
         self.driver.execute_script("arguments[0].click();",self.follower)
         sleep(2)
-        self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight;", self.follower)
+        
     def follow(self):
-        self.follow_btn = self.driver.find_elements(by=By.CSS_SELECTOR,value=".naan-follow-btn")
+        self.follower_list = self.driver.find_element(by=By.CSS_SELECTOR,value=".followers-scroll")
+        self.follow_btn = self.driver.find_elements(by=By.XPATH,value="/html/body/div[2]/div/div[3]/div/button")
+        print(len(self.follow_btn))
         for btn in reversed(self.follow_btn):
+            self.driver.execute_script("arguments[0].scrollTop+=13000",self.follower_list)
             if 'is-following' in btn.get_attribute(name="class") :#type: ignore
-                pass
+                print("Your already following this person")
             else:
-                btn.click()
-                print(f"Followed the {self.driver.find_element(by=By.XPATH,value="..").text}")
+                self.driver.execute_script("arguments[0].click();",btn)
+                print("followed new person")
                 sleep(1)
