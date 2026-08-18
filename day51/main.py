@@ -21,7 +21,7 @@ try:
 
     if download_speed < PROMISED_DOWN or upload_speed < PROMISED_UP:
         isp_handle = os.environ["X_HANDLE"]
-        message = f"Right now I'm only getting {download_el.text}Mbps down / {upload_el.text}Mbps up. Fix this slowinternet"
+        message = f"Hey {isp_handle} you said that you guranted the Dowload speed {PROMISED_DOWN} and Upload speed {PROMISED_UP} but Right now I'm only getting {download_el.text}Mbps down / {upload_el.text}Mbps up. Fix this slowinternet"
         print(f"Speed below threshold — posting complaint:\n{message}")
         bot.tweet_at_provider(message)
     else:

@@ -1,18 +1,14 @@
 import os
-from time import sleep
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 load_dotenv()
 class InternetSpeedTwitterBot:
     def __init__(self):
         self.chrome_option = webdriver.ChromeOptions()
         self.chrome_option.add_experimental_option("detach",True)
-        self.user_data_dir = os.path.join(os.getcwd(), "chrome_profile")
-        self.chrome_option.add_argument(f"--user-data-dir={self.user_data_dir}")
         self.driver = webdriver.Chrome(options=self.chrome_option)
         self.wait = WebDriverWait(self.driver,70)
         self.down = 0
