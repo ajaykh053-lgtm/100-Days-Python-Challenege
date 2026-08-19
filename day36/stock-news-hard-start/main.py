@@ -1,5 +1,6 @@
 import os
 import requests
+import datetime
 from twilio.rest import Client
 from dotenv import load_dotenv
 
@@ -37,11 +38,13 @@ diff_percent_yesterday_closing_price = (
 ) * 100
 print(diff_percent_yesterday_closing_price)
 if diff_percent_yesterday_closing_price > 0.1:
+    toady_date = datetime.date.today()
+    yesterday_date = toady_date - datetime.timedelta(days=1)
     newsparams = {
         "q": COMPANY_NAME,
         "apikey": NEWS_API_KEY,
-        "from": "2026-07-16",
-        "to": "2026-07-16",
+        "from": f"{yesterday_date}",
+        "to": f"{yesterday_date}",
         "sortBy": "popularity",
         "language": "en",
     }
