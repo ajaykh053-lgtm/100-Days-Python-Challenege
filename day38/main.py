@@ -3,12 +3,15 @@ import requests
 import datetime as dt
 from dotenv import load_dotenv
 # from requests.auth import HTTPBasicAuth
-
+from flask import Flask
 load_dotenv()
 GENDER = "male"
 WEIGHT_KG = 50
 HEIGHT_CM = 172
 AGE = 19
+PIXELA_USERNAME = "ajaykh7"
+PIXELA_TOKEN = "sjhgdr43iuwfb84538n"
+GRAPH_ID = "graph2"
 # basic = HTTPBasicAuth(username=os.environ["USERNAME"], password=os.environ["PASSWORD"])
 exercise_text = input("Tell me which exercises you did: ")
 header = {
@@ -54,3 +57,25 @@ sheety_respones = requests.post(
     headers=Authorization,
 )
 # print(sheety_respones.text)
+#Add Graph
+graph_endpoint = f"https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs"
+graph_config = {
+    "id": GRAPH_ID,
+    "name": "Cycling",  # Nmae of the graph
+    "unit": "Hours",  # Measurement for graph
+    "type": "float",  # int float ot str
+    "color": "shibafu",  # colour you want choose specifially in japanese
+}
+header = {"X-USER-TOKEN": PIXELA_TOKEN}
+respones = requests.post(url=graph_endpoint, json=graph_config, headers=header)
+print(respones.text)
+#ADD PIxel
+today = dt.date.today().strftime("%Y%m%d")
+pixel_creation_endpoint = f"{graph_endpoint}/{GRAPH_ID}"
+pixel_data = {
+    "date": f"{today}",
+    "quantity": f"{duration/60}",
+}
+respones = requests.post(url=pixel_creation_endpoint, json=pixel_data, headers=header)
+print(respones.text)
+#https://pixe.la/@ajaykh7

@@ -1,14 +1,14 @@
 import requests
 import datetime as dt
 
-USERNAME = "ajaykh7"
-TOKEN = "sjhgdr43iuwfb84538n"
+PIXELA_USERNAME = "ajaykh7"
+PIXELA_TOKEN = "sjhgdr43iuwfb84538n"
 GRAPH_ID = "graph1"  # for Leetcode graph graph2
 # Step1 : creating pixela user
 pixela_endpoint = "https://pixe.la/v1/users"
 user_params = {
-    "token": TOKEN,
-    "username": USERNAME,
+    "token": PIXELA_TOKEN,
+    "username": PIXELA_USERNAME,
     "agreeTermsOfService": "yes",
     "notMinor": "yes",
 }
@@ -18,7 +18,7 @@ user_params = {
 
 # Step2 :creating graph for python
 # if you want to create another graph
-graph_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs"
+graph_endpoint = f"{pixela_endpoint}/{PIXELA_USERNAME}/graphs"
 graph_config = {
     "id": GRAPH_ID,
     "name": "Python Code Graph",  # Nmae of the graph
@@ -26,12 +26,12 @@ graph_config = {
     "type": "float",  # int float ot str
     "color": "shibafu",  # colour you want choose specifially in japanese
 }
-header = {"X-USER-TOKEN": TOKEN}
+header = {"X-USER-TOKEN": PIXELA_TOKEN}
 # respones = requests.post(url=graph_endpoint, json=graph_config, headers=header)
 # print(respones.text)
 
 
-#this is how to delete a graph
+# this is how to delete a graph
 del_graph_endpoint = f"{graph_endpoint}/{GRAPH_ID}"
 # respones = requests.delete(url=del_graph_endpoint,headers=header)
 # print(respones.text)
@@ -39,12 +39,12 @@ del_graph_endpoint = f"{graph_endpoint}/{GRAPH_ID}"
 # Step3 : Adding pixel to the graph
 today = dt.date.today().strftime("%Y%m%d")
 pixel_creation_endpoint = f"{graph_endpoint}/{GRAPH_ID}"
-# pixel_data = {
-#     "date": f"{today}",
-#     "quantity": f"{input("How many days you completed in toadys python course : ")}",
-# }
-# respones = requests.post(url=pixel_creation_endpoint, json=pixel_data, headers=header)
-# print(respones.text)
+pixel_data = {
+    "date": f"{today}",
+    "quantity": f"{input("How many days you completed in toadys python course : ")}",
+}
+respones = requests.post(url=pixel_creation_endpoint, json=pixel_data, headers=header)
+print(respones.text)
 
 
 # Step4 : Updating pixel int the graph
@@ -66,7 +66,16 @@ delet_endpoint = f"{pixel_creation_endpoint}/{today}"
 #  step 1 change endpoint where you wanna add
 # step 2 run below code and its done
 # endpoint = f"https://pixe.la/@ajaykh7"
-# params = {"displayName": f"{USERNAME}"}
+# params = {"displayName": f"{USERNAME}"} #just display in below
+# params = {  #This is just to Show in side bar
+#     "aboutURL": f"https://home.{USERNAME}.me/",
+#     "contributeURLs": [
+#         "https://pixe.la/",
+#         f"https://github.com/{USERNAME}/pi",
+#         f"https://blog.{USERNAME}.me/archive/category/Pixela",
+#     ],
+# }
+# params={"pinnedGraphID":f"{GRAPH_ID}"} #This is to pipn in the strat of the website
 # respones = requests.put(url=endpoint, json=params, headers=header)
 # print(respones.text)
 
