@@ -2,14 +2,14 @@ import os
 import requests
 import datetime as dt
 from dotenv import load_dotenv
-from requests.auth import HTTPBasicAuth
+# from requests.auth import HTTPBasicAuth
 
 load_dotenv()
 GENDER = "male"
 WEIGHT_KG = 50
 HEIGHT_CM = 172
 AGE = 19
-basic = HTTPBasicAuth(username=os.environ["USERNAME"], password=os.environ["PASSWORD"])
+# basic = HTTPBasicAuth(username=os.environ["USERNAME"], password=os.environ["PASSWORD"])
 exercise_text = input("Tell me which exercises you did: ")
 header = {
     "Content-Type": "application/json",
@@ -27,17 +27,17 @@ respones = requests.post(
     url=f"{os.environ['EXERCISE_ENDPOINT']}", json=params, headers=header
 )
 data = respones.json()["exercises"][0]
-print(data)
+# print(data)
 today_date = dt.date.today().strftime("%d/%m/%Y")
-print(today_date)
+# print(today_date)
 now_time = dt.datetime.now().strftime("%H:%M:%S")
-print(now_time)
+# print(now_time)
 exercise_name = data["name"].title()
-print(exercise_name)
+# print(exercise_name)
 duration = data["duration_min"]
-print(duration)
+# print(duration)
 calories = data["nf_calories"]
-print(calories)
+# print(calories)
 sheet_inputs = {
     "workout": {
         "date": today_date,
@@ -53,4 +53,4 @@ sheety_respones = requests.post(
     json=sheet_inputs,
     headers=Authorization,
 )
-print(sheety_respones.text)
+# print(sheety_respones.text)
