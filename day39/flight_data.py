@@ -46,6 +46,6 @@ def find_cheapest_flight(data, return_date):
             cheapest_flight = FlightData(
                 lowest_price, origin, destination, out_date, return_date
             )
-            print(f"Lowest price to {destination} is GBP {lowest_price}")
+            print(f"Lowest price to {destination} is ₹ {lowest_price}")
 
     return cheapest_flight

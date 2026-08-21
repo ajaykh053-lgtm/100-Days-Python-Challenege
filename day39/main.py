@@ -25,7 +25,7 @@ notification_manager = NotificationManager()
 # ==================== Set the Dates and Origin Airport ====================
 tomorrow = datetime.now() + timedelta(days=1)
 six_month_from_today = datetime.now() + timedelta(days=(6 * 30))
-ORIGIN_CITY_IATA = "LHR"  # London Heathrow
+ORIGIN_CITY_IATA = "BLR"  # London Heathrow # BLR - Banglore
 
 # ==================== Find Cheap Flights ====================
 
@@ -40,7 +40,7 @@ for destination in sheet_data:
     cheapest_flight = find_cheapest_flight(
         flights, return_date=six_month_from_today.strftime("%Y-%m-%d")
     )
-    pprint(f"{destination['city']}: GBP {cheapest_flight.price}")
+    pprint(f"{destination['city']}: ₹ {cheapest_flight.price}")
 
     if (
         cheapest_flight.price != "N/A"
@@ -49,13 +49,13 @@ for destination in sheet_data:
         pprint(f"Lower price flight found to {destination['city']}!")
         data_manager.update_lowest_price(destination["id"], cheapest_flight.price)
         # notification_manager.send_sms(
-        #     message_body=f"Low price alert! Only GBP {cheapest_flight.price} to fly "
+        #     message_body=f"Low price alert! Only ₹ {cheapest_flight.price} to fly "
         #                  f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
         #                  f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         # )
         # SMS not working? Try whatsapp instead.
         notification_manager.send_whatsapp(
-            message_body=f"Low price alert! Only GBP {cheapest_flight.price} to fly "
+            message_body=f"Low price alert! Only ₹ {cheapest_flight.price} to fly "
             f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
             f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         )

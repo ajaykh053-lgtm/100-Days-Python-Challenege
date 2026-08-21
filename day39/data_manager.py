@@ -1,6 +1,7 @@
 import os
 import requests
 from requests.auth import HTTPBasicAuth
+# from pprint import pprint
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -15,11 +16,12 @@ class DataManager:
         self._user = os.environ["SHEETY_USERNAME"]
         self._password = os.environ["SHEETY_PASSWORD"]
         self._authorization = HTTPBasicAuth(self._user, self._password)
-        self.Authorization = {"Authorization": "Bearer iuf87f3ff83cbqo8o3cb"}
+        self.Authorization = {"Authorization": "Bearer ierf83743ct4b43i8rc"}
         self.destination_data = {}
 
     def get_destination_data(self):
         response = requests.get(url=SHEETY_PRICES_ENDPOINT, headers=self.Authorization)
+        # pprint(response.text)
         data = response.json()["prices"]
         self.destination_data = data
         return self.destination_data

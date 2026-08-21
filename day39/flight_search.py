@@ -1,5 +1,6 @@
 import os
 import requests
+from pprint import pprint
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -24,12 +25,12 @@ class FlightSearch:
             "return_date": to_time.strftime("%Y-%m-%d"),
             "type": "1",
             "adults": "1",
-            "currency": "GBP",
+            "currency": "INR",
             "api_key": self._api_key,
         }
 
         response = requests.get(url=SERPAPI_ENDPOINT, params=query)
-
+        # pprint(response.text)
         if response.status_code != 200:
             print(f"check_flights() response code: {response.status_code}")
             return None
