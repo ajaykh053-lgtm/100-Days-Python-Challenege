@@ -13,7 +13,9 @@ class FlightSearch:
     def __init__(self):
         self._api_key = os.environ["SERPAPI_API_KEY"]
 
-    def check_flights(self, origin_city_code, destination_city_code, from_time, to_time):
+    def check_flights(
+        self, origin_city_code, destination_city_code, from_time, to_time
+    ):
         query = {
             "engine": "google_flights",
             "departure_id": origin_city_code,

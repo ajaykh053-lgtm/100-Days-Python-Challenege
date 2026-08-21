@@ -13,7 +13,7 @@ def find_cheapest_flight(data, return_date):
     # Handle empty data if no flight data is returned
     if data is None or (not data.get("best_flights") and not data.get("other_flights")):
         print("No flight data")
-        return FlightData("N/A", "N/A", "N/A", "N/A", "N/A")
+        return FlightData("N/A", "N/A", "N/A", "N/A", "N/A","N/A")
 
     # Combine best_flights and other_flights into one list
     all_flights = data.get("best_flights", []) + data.get("other_flights", [])

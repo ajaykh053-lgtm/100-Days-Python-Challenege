@@ -6,14 +6,13 @@ from flight_search import FlightSearch
 from flight_data import find_cheapest_flight
 from notification_manager import NotificationManager
 
-
 # ==================== Conserve requests and preserve your free plan ====================
 requests_cache.install_cache(
     "flight_cache",
     urls_expire_after={
         "*.sheety.co*": requests_cache.DO_NOT_CACHE,
         "*": 3600,
-    }
+    },
 )
 # ==================== Setup ====================
 data_manager = DataManager()
@@ -36,12 +35,17 @@ for destination in sheet_data:
         ORIGIN_CITY_IATA,
         destination["iataCode"],
         from_time=tomorrow,
-        to_time=six_month_from_today
+        to_time=six_month_from_today,
     )
-    cheapest_flight = find_cheapest_flight(flights, return_date=six_month_from_today.strftime("%Y-%m-%d"))
+    cheapest_flight = find_cheapest_flight(
+        flights, return_date=six_month_from_today.strftime("%Y-%m-%d")
+    )
     pprint(f"{destination['city']}: GBP {cheapest_flight.price}")
 
-    if cheapest_flight.price != "N/A" and cheapest_flight.price < destination["lowestPrice"]:
+    if (
+        cheapest_flight.price != "N/A"
+        and cheapest_flight.price < destination["lowestPrice"]
+    ):
         pprint(f"Lower price flight found to {destination['city']}!")
         data_manager.update_lowest_price(destination["id"], cheapest_flight.price)
         # notification_manager.send_sms(
@@ -52,6 +56,6 @@ for destination in sheet_data:
         # SMS not working? Try whatsapp instead.
         notification_manager.send_whatsapp(
             message_body=f"Low price alert! Only GBP {cheapest_flight.price} to fly "
-                         f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
-                         f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
+            f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
+            f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         )
