@@ -3,7 +3,6 @@ import requests
 import datetime as dt
 from dotenv import load_dotenv
 # from requests.auth import HTTPBasicAuth
-from flask import Flask
 load_dotenv()
 GENDER = "male"
 WEIGHT_KG = 50
@@ -61,7 +60,7 @@ sheety_respones = requests.post(
 graph_endpoint = f"https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs"
 graph_config = {
     "id": GRAPH_ID,
-    "name": "Cycling",  # Nmae of the graph
+    "name": "Exercise : Cycling",  # Nmae of the graph
     "unit": "Hours",  # Measurement for graph
     "type": "float",  # int float ot str
     "color": "shibafu",  # colour you want choose specifially in japanese
@@ -78,4 +77,3 @@ pixel_data = {
 }
 respones = requests.post(url=pixel_creation_endpoint, json=pixel_data, headers=header)
 print(respones.text)
-#https://pixe.la/@ajaykh7
