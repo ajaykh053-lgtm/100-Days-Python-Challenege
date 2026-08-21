@@ -2,7 +2,7 @@ import os
 import requests
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
-
+from pprint import pprint
 # Load environment variables from .env file
 load_dotenv()
 
@@ -24,6 +24,7 @@ class DataManager:
         return self.destination_data
     def get_user_data(self):
         respones = requests.get(url=os.environ['SHEETY_USER_ENDPOINT'],headers=self.Authorization)
+        pprint(respones.text)
         data = respones.json()['user']
         return data
 

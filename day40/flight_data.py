@@ -43,6 +43,6 @@ def find_cheapest_flight(data, return_date):
             out_date = flight["flights"][0]["departure_airport"]["time"].split(" ")[0]
             stop_overs = len(flight["flights"]) - 1
             cheapest_flight = FlightData(lowest_price, origin, destination, out_date, stop_overs, return_date)
-            print(f"Lowest price to {destination} is GBP {lowest_price}")
+            print(f"Lowest price to {destination} is ₹ {lowest_price}")
 
     return cheapest_flight

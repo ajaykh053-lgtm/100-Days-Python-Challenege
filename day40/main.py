@@ -68,22 +68,21 @@ for destination in sheet_data:
         connection = smtplib.SMTP("smtp.gmail.com", 587)
         connection.starttls()
         connection.login(user=os.environ["MY_EMAIL"], password=os.environ["PASSWORD"])
-        message = f"Low price alert! Only GBP {cheapest_flight.price} to fly \nfrom {ORIGIN_CITY}({cheapest_flight.origin_airport}) to {destination['city']}({cheapest_flight.destination_airport}), \non {cheapest_flight.out_date} until {cheapest_flight.return_date}."
+        message = f"Low price alert! Only ₹ {cheapest_flight.price} to fly \nfrom {ORIGIN_CITY}({cheapest_flight.origin_airport}) to {destination['city']}({cheapest_flight.destination_airport}), \non {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         for user in user_data:
-
             connection.sendmail(
                 from_addr=os.environ["MY_EMAIL"],
-                to_addrs=user["eMail"],
+                to_addrs=user["enterYourEMail (example@gmailCom)"],
                 msg=message,
             )
         # notification_manager.send_sms(
-        #     message_body=f"Low price alert! Only GBP {cheapest_flight.price} to fly "
+            # message_body=f"Low price alert! Only ₹ {cheapest_flight.price} to fly "
         #                  f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
         #                  f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         # )
         # SMS not working? Try whatsapp instead.
         # notification_manager.send_whatsapp(
-        #     message_body=f"Low price alert! Only GBP {cheapest_flight.price} to fly "
+            # message_body=f"Low price alert! Only ₹ {cheapest_flight.price} to fly "
         #     f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
         #     f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         # )

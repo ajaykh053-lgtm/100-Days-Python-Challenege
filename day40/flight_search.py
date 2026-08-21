@@ -29,13 +29,13 @@ class FlightSearch:
             "return_date": to_time.strftime("%Y-%m-%d"),
             "type": "1",
             "adults": "1",
-            "currency": "GBP",
+            "currency": "INR",
             "api_key": self._api_key,
         }
         if is_direct:
             query["stops"] = 1
         response = requests.get(url=SERPAPI_ENDPOINT, params=query)
-
+        
         if response.status_code != 200:
             print(f"check_flights() response code: {response.status_code}")
             return None
