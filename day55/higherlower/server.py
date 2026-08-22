@@ -8,7 +8,7 @@ app = Flask(__name__)
 def index():
     return (
         "<h1>Guess a number between 0 and 9</h1>"
-        "<h2> write in url after the / </h2>"
+        "<h2> write in url after the / eg:(url/your number) </h2>"
         '<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGJnOGVqdTZld2VkdzJhaHI2ZWwyMmN1ZXFxZ2d4c3h1YTZhaWxwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RVCJ3vwebUGDpoy7Tm/giphy.gif" y>'
     )
 
