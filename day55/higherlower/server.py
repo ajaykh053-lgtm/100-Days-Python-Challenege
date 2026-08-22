@@ -7,15 +7,14 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return (
-        "<h1>Guess a number between 0 and 9</h1>"
+        "<h1>Guess a number between 0 and 9999</h1>"
         "<h2> write in url after the / eg:(url/your number) </h2>"
         '<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGJnOGVqdTZld2VkdzJhaHI2ZWwyMmN1ZXFxZ2d4c3h1YTZhaWxwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RVCJ3vwebUGDpoy7Tm/giphy.gif" y>'
     )
 
-
+number = randint(0, 9999)
 @app.route("/<int:userguess>")
 def user_number(userguess):
-    number = randint(0, 9999)
     if userguess < number:
         return (
             "<h3>Fhaaaaaa you suck its too lowwwwww !</h3"
