@@ -23,4 +23,7 @@
 }
 #yellow{
     color: yellow;
+    display: flex;
+    align-items: flex-start;
+    align-items: flex-end;
 }
