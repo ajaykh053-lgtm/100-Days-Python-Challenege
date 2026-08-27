@@ -5,7 +5,7 @@ import seaborn
 import matplotlib
 import numpy
 from cv2 import FaceRecognizerSF
-from flask import from flask import Flask,redirect,url_for,render_template,request
+from flask import Flask,redirect,url_for,render_template,request
 
 app=Flask(__name__)
 @app.route('/',methods=['GET','POST'])
