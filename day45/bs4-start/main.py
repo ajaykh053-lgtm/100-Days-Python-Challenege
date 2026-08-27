@@ -33,7 +33,7 @@ print(article_texts[largest_index])
 print(article_links[largest_index])
 
 
-# This is gonna give me the mosted voted movies in hacker news top 30 movies
+# This is gonna give me the mosted voted news in hacker news top 30 News
 
 
 
