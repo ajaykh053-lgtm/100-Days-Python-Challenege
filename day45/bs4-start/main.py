@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from pprint import pprint
 # respones = requests.get(url="https://appbrewery.github.io/news.ycombinator.com/")
 # soup_static_web = BeautifulSoup(respones.text,'html.parser')
 # a_tag = soup_static_web.find_all(name="a", class_="storylink")
@@ -9,23 +10,30 @@ span_tag = soup_live_web.find_all(name="span", class_="titleline")
 article_texts = []
 article_links = []
 # for name in a_tag:
-    # text = name.string
-    # article_texts.append(text)
-    # link = name.get("href")
-    # article_texts.append(link)
+#     text = name.string
+#     article_texts.append(text)
+#     link = name.get("href")
+#     article_texts.append(link)
 for name in span_tag:
-    text = name.find(name="a").string
+    text = name.find(name="a").getText()
+    # pprint(text)
     article_texts.append(text)
     link = name.find(name="a").get("href")
-    article_texts.append(link)
+    # pprint(link)
+    article_links.append(link)
 article_upvotes = [int(score.getText().split()[0]) for score in soup_live_web.find_all(name="span", class_="score")]
+# print(article_texts)
+# print(article_links)
+# print(article_upvotes)
 largest_number = max(article_upvotes)
+# print(largest_number)
 largest_index = article_upvotes.index(largest_number)
+# print(largest_index)
 print(article_texts[largest_index])
 print(article_links[largest_index])
 
 
-
+# This is gonna give me the mosted voted movies in hacker news top 30 movies
 
 
 
