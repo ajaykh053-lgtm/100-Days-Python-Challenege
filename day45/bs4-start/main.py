@@ -15,10 +15,10 @@ article_links = []
 #     link = name.get("href")
 #     article_texts.append(link)
 for name in span_tag:
-    text = name.find(name="a").getText()
+    text = name.find(name="a").getText() #type:ignore
     # pprint(text)
     article_texts.append(text)
-    link = name.find(name="a").get("href")
+    link = name.find(name="a").get("href") #type:ignore
     # pprint(link)
     article_links.append(link)
 article_upvotes = [int(score.getText().split()[0]) for score in soup_live_web.find_all(name="span", class_="score")]
