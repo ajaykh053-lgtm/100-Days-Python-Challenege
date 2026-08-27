@@ -1,10 +1,5 @@
-import requests
 import os
-import dotenv
-import seaborn
-import matplotlib
-import numpy
-from cv2 import FaceRecognizerSF
+import requests
 from flask import Flask,redirect,url_for,render_template,request
 
 app=Flask(__name__)
