@@ -67,3 +67,4 @@ while True:
                 break
 
 # https://ozh.github.io/cookieclicker/
+# After one minute we can set it to forever by setting
