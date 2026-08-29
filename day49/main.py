@@ -1,5 +1,5 @@
 import os
-import time
+from time import sleep
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -39,31 +39,33 @@ def retry(func, retries=7, description=None):
         except TimeoutException:
             if i == retries - 1:
                 raise
-            time.sleep(1)
+            sleep(1)
 
 
 # Function to perform entire login process with retry
 def login():
     login_btn = wait.until(ec.element_to_be_clickable((By.ID, "login-button")))
     login_btn.click()
-
+    sleep(1)
     email_input = wait.until(ec.presence_of_element_located((By.ID, "email-input")))
     email_input.clear()
     email_input.send_keys(os.environ['ACCOUNT_EMAIL'])
-
+    sleep(1)
     password_input = driver.find_element(By.ID, "password-input")
     password_input.clear()
     password_input.send_keys(os.environ['ACCOUNT_PASSWORD'])
-
+    sleep(1)
     submit_btn = driver.find_element(By.ID, "submit-button")
     submit_btn.click()
-
+    sleep(1)
     wait.until(ec.presence_of_element_located((By.ID, "schedule-page")))
 
 
 # Function to book a class process that checks if the button text changed with retry
 def book_class(booking_button):
+    sleep(1)
     booking_button.click()
+    sleep(1)
     # Wait for button state to change - will time out if booking failed
     wait.until(lambda d: booking_button.text == "Booked")
 
@@ -106,14 +108,14 @@ for card in class_cards:
                 print(f"✓ Successfully booked: {class_info}")
                 booked_count += 1
                 processed_classes.append(f"[New Booking] {class_info}")
-                time.sleep(0.5)
+                sleep(0.5)
             elif button.text == "Join Waitlist":
                 # Use retry for entire waitlist action
                 retry(lambda: book_class(button), description="Waitlisting")
                 print(f"✓ Joined waitlist for: {class_info}")
                 waitlist_count += 1
                 processed_classes.append(f"[New Waitlist] {class_info}")
-                time.sleep(0.5)
+                sleep(0.5)
 
 # ----------------  Verify Class Bookings on My Bookings Page ----------------
 
