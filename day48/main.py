@@ -30,14 +30,14 @@ print(button.size)
 
 # Using CSSSELECTOR
 
-a_tag = driver.find_element(By.CSS_SELECTOR,value=".documentation-widget a")
+a_tag = driver.find_element(By.CSS_SELECTOR,value="._p13n-desktop-sims-fbt_fbt-desktop_asin-link__3oiMu")
 print(a_tag.text)
-ele = driver.find_element(By.CSS_SELECTOR,value=".download-widget p")
+ele = driver.find_element(By.CSS_SELECTOR,value=".product-title-word-break")
 print(ele.text)
 
 # Using XPATH
 
-print(driver.find_element(By.XPATH,value="/html/body/div/header/div/div[3]/div/ul[1]/li/a/span"))
+print(driver.find_element(By.XPATH,value="/html/body/div[1]/div[1]/div[2]/div[5]/div[4]/div[56]/div/ul").text)
 
 
 
