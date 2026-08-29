@@ -29,7 +29,7 @@ Cookie_button = driver.find_element(By.ID, value="bigCookie")
 item_ids = [f"product{i}" for i in range(18)]
 wait = 5
 timeout = time() + wait
-five_min = time() + 60 * 2
+five_min = time() + 60
 
 # print(Cookies_element.tag_name)
 # print(Cookie_count)
@@ -37,10 +37,12 @@ while True:
     Cookie_button.click()
     if time() > timeout:
         try:
-            products = driver.find_elements(by=By.CSS_SELECTOR, value="div[id^='product']")
+            products = driver.find_elements(
+                by=By.CSS_SELECTOR, value="div[id^='product']"
+            )
             best_item = None
             for product in reversed(products):
-                if "enabled" in product.get_attribute("class"): #type: ignore
+                if "enabled" in product.get_attribute("class"):  # type: ignore
                     best_item = product
                     break
             # print(best_item.tag_name)
@@ -48,9 +50,9 @@ while True:
             if best_item:
                 driver.execute_script("arguments[0].click();", best_item)
                 print(f"Bought item : {best_item.get_attribute('id')}")
-        except (NoSuchElementException,ValueError):
+        except (NoSuchElementException, ValueError):
             print("Couldn't find cookie count or items")
-        timeout = time()+wait
+        timeout = time() + wait
         if time() > five_min:
             try:
                 Cookies_element = driver.find_element(By.ID, value="cookies")
@@ -64,4 +66,4 @@ while True:
                 print("Cookies count could not found")
                 break
 
-#https://ozh.github.io/cookieclicker/
+# https://ozh.github.io/cookieclicker/
