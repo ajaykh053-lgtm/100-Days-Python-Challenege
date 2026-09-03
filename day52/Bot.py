@@ -77,14 +77,15 @@ class InstaFollower:
         sleep(1)
         self.follower_list.send_keys(Keys.PAGE_DOWN)
         self.follower_list.send_keys(Keys.PAGE_DOWN)
+        self.follower_list.send_keys(Keys.PAGE_DOWN)
         self.follow_btn = self.driver.find_elements(
             by=By.XPATH, value="/html/body/div[2]/div/div[3]/div/button"
         )
         print(len(self.follow_btn))
         for btn in reversed(self.follow_btn):
-            self.driver.execute_script(
-                "arguments[0].scrollTop+=13000", self.follower_list
-            )
+            # self.driver.execute_script(
+            #     "arguments[0].scrollTop+=13000", self.follower_list
+            # )
             if "is-following" in btn.get_attribute(name="class"):  # type: ignore
                 print("Your already following this person")
             else:
