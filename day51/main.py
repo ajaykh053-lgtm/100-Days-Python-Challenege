@@ -28,5 +28,5 @@ try:
         print("Speed is within promised range. No tweet needed.")
 
 except Exception as e:
-    print(f"❌ Bot crashed: {e}")
+    print(f" Bot crashed: {e}")
     raise
