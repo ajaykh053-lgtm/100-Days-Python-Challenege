@@ -10,7 +10,7 @@ def home():
     return render_template('index.html')
 
 
-@app.route("/add")
+@app.route("/add",methods=['POST'])
 def add():
     return render_template('add.html')
 
