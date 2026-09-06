@@ -6,6 +6,6 @@ def inedx():
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,host='localhost',port=8000)
 # By typing this in console fo chrome we can direct edit website from the chrome
 # document.body.contentEditable=true
