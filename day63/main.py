@@ -7,12 +7,12 @@ all_books = []
 
 @app.route("/")
 def home():
-    return render_template('index.html')
+    return render_template("index.html")
 
 
-@app.route("/add",methods=['POST'])
+@app.route("/add", methods=["GET","POST"])
 def add():
-    return render_template('add.html')
+    return render_template("add.html")
 
 
 if __name__ == "__main__":
