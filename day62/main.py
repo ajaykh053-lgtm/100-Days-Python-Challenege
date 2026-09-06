@@ -1,7 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,redirect,url_for
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TimeField, URLField, SelectField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired, URL
 import csv
 
@@ -12,9 +12,9 @@ Bootstrap5(app)
 
 class CafeForm(FlaskForm):
     cafe = StringField("Cafe name", validators=[DataRequired()])
-    location_url = URLField("Location_url", validators=[URL()])
-    open_time = StringField("Open Time", validators=[DataRequired()])
-    closing_time = StringField("Closing Time", validators=[DataRequired()])
+    location = StringField("Location_url", validators=[URL()])
+    open = StringField("Open Time", validators=[DataRequired()])
+    close = StringField("Closing Time", validators=[DataRequired()])
     coffee_rating = SelectField(
         "Coffee Rating",
         choices=[
@@ -41,7 +41,7 @@ class CafeForm(FlaskForm):
         ],
         validators=[DataRequired()],
     )
-    power_outlet_rating = SelectField(
+    power_rating = SelectField(
         "Power Outlet Rating",choices=[
             ("", ""),
             ("✘", "✘"),
@@ -70,14 +70,21 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/add", method=["GET","POST"])
+@app.route("/add", methods=["GET","POST"])
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
-        print("True")
-    # Exercise:
-    # Make the form write a new row into cafe-data.csv
-    # with   if form.validate_on_submit()
+        with open("day62/cafe-data.csv", mode="a", encoding="utf-8") as csv_file:
+            csv_file.write(
+                f"\n{form.cafe.data},"
+                f"{form.location.data},"
+                f"{form.open.data},"
+                f"{form.close.data},"
+                f"{form.coffee_rating.data},"
+                f"{form.wifi_rating.data},"
+                f"{form.power_rating.data}"
+            )
+        return redirect(url_for("cafes"))
     return render_template("add.html", form=form)
 
 
@@ -88,7 +95,7 @@ def cafes():
         list_of_rows = []
         for row in csv_data:
             list_of_rows.append(row)
-        print(list_of_rows)
+        # print(list_of_rows)
     return render_template("cafes.html", cafes=list_of_rows)
 
 
