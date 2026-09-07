@@ -74,9 +74,10 @@ def Edit(book_id):
             print(change_rating)
             change_rating.rating = request.form['new_rating']
         return redirect(url_for('index'))
-    result = db.session.execute(db.select(Book).order_by(Book.title))
-    all_books = result.scalars().all()
-    return render_template('editrating.html',books=all_books,book_id=book_id)
+    else :
+        result = db.session.execute(db.select(Book).order_by(Book.title))
+        all_books = result.scalars().all()
+    return render_template('edit.html',books=all_books,book_id=book_id)
 
 @app.route("/delete/<int:book_id>")
 def delete(book_id):
