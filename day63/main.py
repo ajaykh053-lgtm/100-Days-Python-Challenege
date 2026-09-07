@@ -8,42 +8,52 @@
 # #Insert Values into the table in sqllite3,After intseting comment it out
 # # cursor.execute("INSERT INTO books VALUES(1, 'Harry Potter', 'J. K. Rowling', '9.3')")
 # # db.commit()
-from flask_bootstrap import Bootstrap5
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, Float, String
-from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import Integer, String, Float
 
 app = Flask(__name__)
-Bootstrap5(app=app)
 
 
+# CREATE DATABASE
 class Base(DeclarativeBase):
     pass
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///books-collectionday63.db"
+# Create the extension
 db = SQLAlchemy(model_class=Base)
+# initialise the app with the extension
 db.init_app(app)
 
 
-class Book:
-    id: Mapped[int] = mapped_column(
-        Integer, nullable=False, primary_key=True, unique=True
-    )
-    title: Mapped[str] = mapped_column(String(250), nullable=False, unique=True)
+# CREATE TABLE
+class Book(db.Model):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     author: Mapped[str] = mapped_column(String(250), nullable=False)
     rating: Mapped[float] = mapped_column(Float, nullable=False)
 
 
+# Create table schema in the database. Requires application context.
 with app.app_context():
     db.create_all()
 
-all_books = []
 
-
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
+    ##READ ALL RECORDS
+    # Construct a query to select from the database. Returns the rows in the database
+    result = db.session.execute(db.select(Book).order_by(Book.title))
+    # Use .scalars() to get the elements rather than entire rows from the database
+    all_books = result.scalars().all()
+    # print(all_books)
+    return render_template("index.html", books=all_books)
+
+
+@app.route("/add", methods=["GET", "POST"])
+def add():
     if request.method == "POST":
         with app.app_context():
             new_book = Book(
@@ -52,20 +62,25 @@ def index():
                 rating=request.form["Rating"],
             )
             db.session.add(new_book)
-        with app.app_context():
-            book_dict = {
-                "title": f"{db.session.execute(db.select(Book).where(Book.title == request.form['Bookname'])).scalar()}",
-                "author": f"{db.session.execute(db.select(Book).where(Book.title == request.form['BookAuthor'])).scalar()}",
-                "rating": f"{db.session.execute(db.select(Book).where(Book.title == request.form['Rating'])).scalar()}",
-            }
-            all_books.append(book_dict)
-    return render_template("index.html", all_books=all_books, heading="List is books")
-
-
-@app.route("/add")
-def add():
+            db.session.commit()
+        return redirect(url_for("index"))
     return render_template("add.html")
 
+@app.route("/Edit/<int:book_id>",methods=['GET','POST'])
+def Edit(book_id):
+    if request.method == "POST":
+        with app.app_context():
+            change_rating = db.session.execute(db.select(Book).where(Book.id == book_id)).scalar()
+            print(change_rating)
+            change_rating.rating = request.form['new_rating']
+        return redirect(url_for('index'))
+    result = db.session.execute(db.select(Book).order_by(Book.title))
+    all_books = result.scalars().all()
+    return render_template('editrating.html',books=all_books,book_id=book_id)
+
+@app.route("/delete/<int:book_id>")
+def delete(book_id):
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run(debug=True)
