@@ -3,16 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <title>Add Book</title>
+    {% block styles %}
+    {{bootstrap.load_css()}}
+    {% endblock %}
   </head>
   <body>
     <form action="{{url_for('index')}}" method="POST">
-      <label>Book Name</label>
-      <input type="text" name="Bookname" />
-      <label>Book Author</label>
-      <input type="text" name="BookAuthor" />
-      <label>Rating</label>
-      <input type="text" name="Rating" />
-      <button type="submit">Add Book</button>
+      <label style="margin: 5px; display:flex; flex-direction:column">Book Name</label>
+      <input type="text" name="Bookname"  /> <br>
+      <label style="margin: 5px; display:flex; flex-direction:column">Book Author</label>
+      <input type="text" name="BookAuthor"  /> <br>
+      <label style="margin: 5px; display:flex; flex-direction:column">Rating</label>
+      <input type="text" name="Rating" /> <br>
+      <button type="submit" style="margin: 5px; display:flex; flex-direction:column" >Add Book</button>
     </form>
   </body>
 </html>

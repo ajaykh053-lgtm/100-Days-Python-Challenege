@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>Library</title>
+    {% block styles %} {{bootstrap.load_css()}} {% endblock %}
   </head>
   <body>
     <h1>My Library</h1>
+
     <ul>
-      {% for books in all_books %}
-      {% if all_books == [] %}
-        <p>Library is empty.</p>
-      {% else %}
-        <li>{{books['title']}}-{{books['author']}}-{{books['rating']}}/10</li>
-      {% endif %}
-      {% endfor %}
+      {% if not all_books %}
+      <p>{{heading}}</p>
+      {% else %} {% for books in all_books %}
+      <li>{{books['title']}}-{{books['author']}}-{{books['rating']}}/10</li>
+      {% endfor %} {% endif %}
     </ul>
     <a href="{{url_for('add')}}">Add New Book</a>
   </body>
