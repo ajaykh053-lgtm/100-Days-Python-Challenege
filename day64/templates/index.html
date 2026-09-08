@@ -1,41 +1,38 @@
-{% extends 'base.html' %}
-
-{% block title %}My Top 10 Movies{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}My Top 10 Movies{% endblock %} {%
+block content %}
 <div class="container">
   <h1 class="heading">My Top 10 Movies</h1>
   <p class="description">These are my all-time favourite movies.</p>
-  
-  {% for movies in movies_list %}
-    
-  {% endfor %}
-     
-  <div class="card" >
-    <div class="front" style="background-image: url('https://www.shortlist.com/media/images/2019/05/the-30-coolest-alternative-movie-posters-ever-2-1556670563-K61a-column-width-inline.jpg');">
-        <p class="large">1</p>
+  {% if not movie_list %}
+  <p>No Movies Available.</p>
+  {% else %} {% for movies in movie_list %}
+  <div class="card">
+    <div class="front" style="background-image: url('{{movies.img_url}}');">
+      <p class="large">{{movies.ranking}}</p>
     </div>
     <div class="back">
       <div>
-    <div class="title">Drive <span class="release_date">(2011)</span></div>
+        <div class="title">
+          {{movies.title}} <span class="release_date">({{movies.year}})</span>
+        </div>
         <div class="rating">
-            <label>7.5</label>
+          <label>{{movies.rating}}</label>
           <i class="fas fa-star star"></i>
         </div>
-          <p class="review">"Loved it!"</p>
-        <p class="overview">
-            A mysterious Hollywood stuntman and mechanic moonlights as a getaway driver and finds himself in trouble when he helps out his neighbor in this action drama.
-        </p>
+        <p class="review">{{movies.review}}</p>
+        <p class="overview">"{{movies.description}}"</p>
 
-        <a href="{{url_for('editmovie')}}" class="button">Update</a>
-        <a href="{{url_for('deletemovie')}}" class="button delete-button">Delete</a>
-
+        <a href="{{url_for('editmovie',movieid=movies['id'])}}" class="button">Update</a>
+        <a href="{{url_for('deletemovie',movieid=movies['id'])}}" class="button delete-button"
+          >Delete</a
+        >
       </div>
     </div>
   </div>
+  {% endfor %} {% endif %}
 </div>
 <div class="container text-center add">
-<a href="{{url_for('addmovie')}}" class="button">Add Movie</a>
+  <a href="{{url_for('addmovie')}}" class="button">Add Movie</a>
 </div>
 
 {% endblock %}
