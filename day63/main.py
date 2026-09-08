@@ -72,7 +72,9 @@ def Edit(book_id):
         with app.app_context():
             change_rating = db.session.execute(db.select(Book).where(Book.id == book_id)).scalar()
             print(change_rating)
+            print(request.form['new_rating'])
             change_rating.rating = request.form['new_rating']
+            db.session.commit()
         return redirect(url_for('index'))
     else :
         result = db.session.execute(db.select(Book).order_by(Book.title))
@@ -80,7 +82,11 @@ def Edit(book_id):
     return render_template('edit.html',books=all_books,book_id=book_id)
 
 @app.route("/delete/<int:book_id>")
-def delete(book_id):
+def delete_book(book_id):
+    with app.app_context():
+        delete_book = db.session.execute(db.select(Book).where(Book.id == book_id)).scalar()
+        db.session.delete(delete_book)
+        db.session.commit()
     return redirect(url_for('index'))
 
 if __name__ == "__main__":

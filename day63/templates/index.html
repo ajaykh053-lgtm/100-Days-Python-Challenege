@@ -12,10 +12,9 @@
       <p>List is Empty</p>
       {% else %} {% for book in books %}
       <li>
-        •
-        <a href="{{url_for('delete',book_id=book['id'])}}">Delete</a>
+        <a href="{{url_for('delete_book',book_id=book['id'])}}">Delete</a>
         {{book['title']}}-{{book['author']}}-{{book['rating']}}/10 •
-        <a href="{{url_for('edit.html',book_id=book['id'])}}">Edit rating</a>
+        <a href="{{url_for('Edit',book_id=book['id'])}}">Edit rating</a>
       </li>
       {% endfor %} {% endif %}
     </ul>

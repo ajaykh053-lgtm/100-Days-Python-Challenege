@@ -53,6 +53,7 @@ with app.app_context():
     book = db.session.execute(
         db.select(Book).where(Book.title == "Harry Potter")
     ).scalar()
+    print(book)
 
 
 # UPDATE PARTICULAR RECORD
