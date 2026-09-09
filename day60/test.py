@@ -11,6 +11,8 @@ def index():
 
 @app.route("/login", methods=["POST"])
 def receive_data():
+    if request.method == "POST":
+        return "<h1>Logined successfully</h1>"
     return f"Name : {request.form['username']} Password : {request.form['password']}"
 
 
