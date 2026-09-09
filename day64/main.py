@@ -1,3 +1,6 @@
+import os
+import requests
+from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
@@ -6,11 +9,16 @@ from sqlalchemy import Integer, String, Float
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField, IntegerField, URLField
 from wtforms.validators import DataRequired, URL
-import requests
+
+load_dotenv()
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8BYkEfBA6O6donzWlSihBXox7C0sKR6b"
 Bootstrap5(app)
+headers = {
+    "accept": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDBlZjFiNGUwMTkyZjA2YzI4ODMyZTZiZWM2ZjQ3YyIsIm5iZiI6MTc4ODg3NTQzNS40MjcsInN1YiI6IjZhYTAxMmFiYTNiZWNiYmZjNGM3NjQxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.aJC8UXuev_dSzScRwW8FDF4ogRNkqTB3-IIv8gGQwko",
+}
 
 
 # CREATE DB
@@ -27,12 +35,12 @@ db.init_app(app=app)
 class Movies(db.Model):
     id: Mapped[int] = mapped_column(Integer, nullable=False, primary_key=True)
     title: Mapped[str] = mapped_column(String, nullable=False, unique=True)
-    year: Mapped[int] = mapped_column(Integer, nullable=False)
+    year: Mapped[int] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
-    rating: Mapped[float] = mapped_column(Float, nullable=False)
-    ranking: Mapped[int] = mapped_column(Integer, nullable=False)
-    review: Mapped[str] = mapped_column(String, nullable=False)
-    img_url: Mapped[str] = mapped_column(String, nullable=False)
+    rating: Mapped[float] = mapped_column(Float)
+    ranking: Mapped[int] = mapped_column(Integer)
+    review: Mapped[str] = mapped_column(String)
+    img_url: Mapped[str] = mapped_column(String)
 
 
 with app.app_context():
@@ -68,12 +76,6 @@ with app.app_context():
 # CREATE FROM
 class movie_form(FlaskForm):
     title = StringField("Movie Title", validators=[DataRequired()])
-    year = IntegerField("Movie Released Year", validators=[DataRequired()])
-    description = StringField("Movie Description", validators=[DataRequired()])
-    rating = FloatField("Movie Rating", validators=[DataRequired()])
-    ranking = IntegerField("Movie Ranking", validators=[DataRequired()])
-    review = StringField("Movie Review", validators=[DataRequired()])
-    img_url = URLField("Movie Link", validators=[DataRequired(), URL()])
     submit = SubmitField("Add")
 
 
@@ -83,6 +85,7 @@ class editmovie_form(FlaskForm):
     )
     review = StringField("Movie Review", validators=[DataRequired()])
     submit = SubmitField("Add")
+
 
 @app.route("/")
 def home():
@@ -98,12 +101,16 @@ def editmovie(movieid):
     edit_form = editmovie_form()
     if request.method == "POST":
         with app.app_context():
-            new_rating = db.session.execute(db.select(Movies).where(Movies.id == movieid)).scalar()
-            new_review = db.session.execute(db.select(Movies).where(Movies.id == movieid)).scalar()
+            new_rating = db.session.execute(
+                db.select(Movies).where(Movies.id == movieid)
+            ).scalar()
+            new_review = db.session.execute(
+                db.select(Movies).where(Movies.id == movieid)
+            ).scalar()
             new_rating.rating = request.form["rating"]
             new_review.review = request.form["review"]
             db.session.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for("home"))
     else:
         pass
     return render_template("edit.html", form=edit_form)
@@ -114,33 +121,49 @@ def addmovie():
     movies_form = movie_form()
     if request.method == "POST":
         with app.app_context():
+            headers = {
+                "accept": "application/json",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDBlZjFiNGUwMTkyZjA2YzI4ODMyZTZiZWM2ZjQ3YyIsIm5iZiI6MTc4ODg3NTQzNS40MjcsInN1YiI6IjZhYTAxMmFiYTNiZWNiYmZjNGM3NjQxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.aJC8UXuev_dSzScRwW8FDF4ogRNkqTB3-IIv8gGQwko",
+            }
+            movie_title = movies_form.title.data
+            params = {"api_key": f"{os.environ['API_KEY']}", "query": f"{movie_title}"}
+            response = requests.get(
+                os.environ["MOVIE_ENDPOINT"], params=params, headers=headers
+            )
+            data = response.json()["results"]
+            release_date = data[0]["release_date"].split("-")[0]
             Movie = Movies(
-                title=request.form["title"],
-                year=request.form["year"],
-                description=request.form["description"],
-                rating=request.form["rating"],
-                ranking=request.form["ranking"],
-                review=request.form["review"],
-                img_url=request.form["img_url"],
+                title=data[0]["title"],
+                year=release_date,
+                description=data[0]["overview"],
+                img_url=f"https://image.tmdb.org/t/p/w500{data[0]["poster_path"]}",
             )
             db.session.add(Movie)
             db.session.commit()
-        return redirect(url_for('home'))
+            movie = db.session.execute(
+                db.select(Movies).where(Movies.title == data[0]["title"])
+            ).scalar()
+            movieid = movie.id
+        return redirect(url_for("selectmovie", options=data, movie_id=movieid))
     return render_template("add.html", form=movies_form)
+
+
+@app.route("/select/<options>/<movie_id", methods=["GET", "POST"])
+def selectmovie(options, movie_id):
+    if request.method == "POST":
+        redirect(url_for("editmovie", movieid=movie_id))
+    return render_template("select.html", options=options)
 
 
 @app.route("/delete/<int:movieid>")
 def deletemovie(movieid):
     with app.app_context():
-        Movie = db.session.execute(db.select(Movies).where(Movies.id == movieid)).scalar()
+        Movie = db.session.execute(
+            db.select(Movies).where(Movies.id == movieid)
+        ).scalar()
         db.session.delete(Movie)
         db.session.commit()
-    return redirect(url_for('home'))
-
-
-@app.route("/select", methods=["GET", "POST"])
-def selectmovie():
-    return render_template("select.html")
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
