@@ -7,8 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FloatField, IntegerField, URLField
-from wtforms.validators import DataRequired, URL
+from wtforms import StringField, SubmitField, FloatField
+from wtforms.validators import DataRequired
 
 load_dotenv()
 
@@ -37,40 +37,14 @@ class Movies(db.Model):
     title: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     year: Mapped[int] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
-    rating: Mapped[float] = mapped_column(Float)
-    ranking: Mapped[int] = mapped_column(Integer)
-    review: Mapped[str] = mapped_column(String)
-    img_url: Mapped[str] = mapped_column(String)
+    rating: Mapped[float] = mapped_column(Float, nullable=True)
+    ranking: Mapped[int] = mapped_column(Integer, nullable=True)
+    review: Mapped[str] = mapped_column(String, nullable=True)
+    img_url: Mapped[str] = mapped_column(String, nullable=True)
 
 
 with app.app_context():
     db.create_all()
-
-# # Manually Adding Movies to Database
-# with app.app_context():
-#     new_movie = Movies(
-#         title="Phone Booth",
-#         year=2002,
-#         description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
-#         rating=7.3,
-#         ranking=10,
-#         review="My favourite character was the caller.",
-#         img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg",
-#     )
-#     db.session.add(new_movie)
-#     db.session.commit()
-# with app.app_context():
-#     second_movie = Movies(
-#         title="Avatar The Way of Water",
-#         year=2022,
-#         description="Set more than a decade after the events of the first film, learn the story of the Sully family (Jake, Neytiri, and their kids), the trouble that follows them, the lengths they go to keep each other safe, the battles they fight to stay alive, and the tragedies they endure.",
-#         rating=7.3,
-#         ranking=9,
-#         review="I liked the water.",
-#         img_url="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg"
-#     )
-#     db.session.add(second_movie)
-#     db.session.commit()
 
 
 # CREATE FROM
@@ -96,63 +70,22 @@ def home():
     return render_template("index.html", movie_list=movies)
 
 
-@app.route("/edit/<int:movieid>", methods=["GET", "POST"])
-def editmovie(movieid):
-    edit_form = editmovie_form()
-    if request.method == "POST":
-        with app.app_context():
-            new_rating = db.session.execute(
-                db.select(Movies).where(Movies.id == movieid)
-            ).scalar()
-            new_review = db.session.execute(
-                db.select(Movies).where(Movies.id == movieid)
-            ).scalar()
-            new_rating.rating = request.form["rating"]
-            new_review.review = request.form["review"]
-            db.session.commit()
-        return redirect(url_for("home"))
-    else:
-        pass
-    return render_template("edit.html", form=edit_form)
-
-
 @app.route("/add", methods=["GET", "POST"])
 def addmovie():
     movies_form = movie_form()
-    if request.method == "POST":
-        with app.app_context():
-            headers = {
-                "accept": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDBlZjFiNGUwMTkyZjA2YzI4ODMyZTZiZWM2ZjQ3YyIsIm5iZiI6MTc4ODg3NTQzNS40MjcsInN1YiI6IjZhYTAxMmFiYTNiZWNiYmZjNGM3NjQxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.aJC8UXuev_dSzScRwW8FDF4ogRNkqTB3-IIv8gGQwko",
-            }
-            movie_title = movies_form.title.data
-            params = {"api_key": f"{os.environ['API_KEY']}", "query": f"{movie_title}"}
-            response = requests.get(
-                os.environ["MOVIE_ENDPOINT"], params=params, headers=headers
-            )
-            data = response.json()["results"]
-            release_date = data[0]["release_date"].split("-")[0]
-            Movie = Movies(
-                title=data[0]["title"],
-                year=release_date,
-                description=data[0]["overview"],
-                img_url=f"https://image.tmdb.org/t/p/w500{data[0]["poster_path"]}",
-            )
-            db.session.add(Movie)
-            db.session.commit()
-            movie = db.session.execute(
-                db.select(Movies).where(Movies.title == data[0]["title"])
-            ).scalar()
-            movieid = movie.id
-        return redirect(url_for("selectmovie", options=data, movie_id=movieid))
+    if movies_form.validate_on_submit():
+        movie_title = movies_form.title.data
+        response = requests.get(
+            os.environ["MOVIE_DB_SEARCH_URL"],
+            params={
+                "api_key": f"{os.environ['API_KEY']}",
+                "query": f"{movie_title}",
+            },
+            headers=headers,
+        )
+        data = response.json()["results"]
+        return render_template("select.html", options=data)
     return render_template("add.html", form=movies_form)
-
-
-@app.route("/select/<options>/<movie_id", methods=["GET", "POST"])
-def selectmovie(options, movie_id):
-    if request.method == "POST":
-        redirect(url_for("editmovie", movieid=movie_id))
-    return render_template("select.html", options=options)
 
 
 @app.route("/delete/<int:movieid>")
@@ -164,6 +97,39 @@ def deletemovie(movieid):
         db.session.delete(Movie)
         db.session.commit()
     return redirect(url_for("home"))
+
+
+@app.route("/edit/<int:movie_id>", methods=["GET", "POST"])
+def editmovie(movie_id):
+    edit_form = editmovie_form()
+    movie = db.get_or_404(Movies, movie_id)
+    if edit_form.validate_on_submit():
+        movie.rating = float(request.form["rating"])
+        movie.review = request.form["review"]
+        db.session.commit()
+        return redirect(url_for("home"))
+    return render_template("edit.html", movie=movie, form=edit_form)
+
+
+@app.route("/find/<movie_api_id>")
+def find_movie(movie_api_id):
+    if movie_api_id:
+        movie_api_url = f"{os.environ['MOVIE_DB_INFO_URL']}/{movie_api_id}"
+        response = requests.get(
+            movie_api_url,
+            params={"api_key": os.environ["API_KEY"], "language": "en-US"},
+        )
+        data = response.json()
+        new_movie = Movies(
+            id=data["id"],
+            title=data["title"],
+            year=data["release_date"].split("-")[0],
+            img_url=f"{os.environ['MOVIE_DB_IMAGE_URL']}{data['poster_path']}",
+            description=data["overview"],
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+    return redirect(url_for("editmovie", movie_id=new_movie.id))
 
 
 if __name__ == "__main__":
