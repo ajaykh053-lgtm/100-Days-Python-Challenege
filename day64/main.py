@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FloatField
+from wtforms import StringField, SubmitField, FloatField, IntegerField
 from wtforms.validators import DataRequired
 
 load_dotenv()
@@ -57,6 +57,7 @@ class editmovie_form(FlaskForm):
     rating = FloatField(
         "Your Movie Rating out of 10 eg:7.5", validators=[DataRequired()]
     )
+    ranking = IntegerField("Rank out of 10 Movie", validators=[DataRequired()])
     review = StringField("Movie Review", validators=[DataRequired()])
     submit = SubmitField("Add")
 
@@ -99,12 +100,14 @@ def deletemovie(movieid):
     return redirect(url_for("home"))
 
 
-@app.route("/edit/<int:movie_id>", methods=["GET", "POST"])
-def editmovie(movie_id):
+@app.route("/edit", methods=["GET", "POST"])
+def editmovie():
     edit_form = editmovie_form()
+    movie_id = request.args.get("id")
     movie = db.get_or_404(Movies, movie_id)
     if edit_form.validate_on_submit():
         movie.rating = float(request.form["rating"])
+        movie.ranking = int(request.form["ranking"])
         movie.review = request.form["review"]
         db.session.commit()
         return redirect(url_for("home"))
@@ -129,7 +132,7 @@ def find_movie(movie_api_id):
         )
         db.session.add(new_movie)
         db.session.commit()
-    return redirect(url_for("editmovie", movie_id=new_movie.id))
+    return redirect(url_for("editmovie", id=new_movie.id))
 
 
 if __name__ == "__main__":
