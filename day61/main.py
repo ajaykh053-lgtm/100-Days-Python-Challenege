@@ -38,7 +38,7 @@ def home():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     login_form = LoginForm()
-    print(login_form.validate_on_submit())
+    # print(login_form.validate_on_submit())
     if login_form.validate_on_submit():
         if (
             login_form.email.data == "admin@email.com"
