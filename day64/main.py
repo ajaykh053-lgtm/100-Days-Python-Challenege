@@ -57,7 +57,6 @@ class editmovie_form(FlaskForm):
     rating = FloatField(
         "Your Movie Rating out of 10 eg:7.5", validators=[DataRequired()]
     )
-    ranking = IntegerField("Rank out of 10 Movie", validators=[DataRequired()])
     review = StringField("Movie Review", validators=[DataRequired()])
     submit = SubmitField("Add")
 
@@ -65,10 +64,12 @@ class editmovie_form(FlaskForm):
 @app.route("/")
 def home():
     with app.app_context():
-        movies = (
-            db.session.execute(db.select(Movies).order_by(Movies.id)).scalars()
-        ).all()
-    return render_template("index.html", movie_list=movies)
+        result = db.session.execute(db.select(Movies).order_by(Movies.rating))
+        all_movies = result.scalars().all()
+        for i in range(len(all_movies)):
+            all_movies[i].ranking = len(all_movies) - i
+        db.session.commit()
+    return render_template("index.html", movie_list=all_movies)
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -107,15 +108,15 @@ def editmovie():
     movie = db.get_or_404(Movies, movie_id)
     if edit_form.validate_on_submit():
         movie.rating = float(request.form["rating"])
-        movie.ranking = int(request.form["ranking"])
         movie.review = request.form["review"]
         db.session.commit()
         return redirect(url_for("home"))
     return render_template("edit.html", movie=movie, form=edit_form)
 
 
-@app.route("/find/<movie_api_id>")
+@app.route("/find/<int:movie_api_id>")
 def find_movie(movie_api_id):
+    print(movie_api_id)
     if movie_api_id:
         movie_api_url = f"{os.environ['MOVIE_DB_INFO_URL']}/{movie_api_id}"
         response = requests.get(
@@ -124,7 +125,6 @@ def find_movie(movie_api_id):
         )
         data = response.json()
         new_movie = Movies(
-            id=data["id"],
             title=data["title"],
             year=data["release_date"].split("-")[0],
             img_url=f"{os.environ['MOVIE_DB_IMAGE_URL']}{data['poster_path']}",
@@ -132,7 +132,9 @@ def find_movie(movie_api_id):
         )
         db.session.add(new_movie)
         db.session.commit()
-    return redirect(url_for("editmovie", id=new_movie.id))
+        movie = db.get_or_404(Movies,new_movie.id)
+        print(movie.id)
+    return redirect(url_for("editmovie", id=movie.id))
 
 
 if __name__ == "__main__":
