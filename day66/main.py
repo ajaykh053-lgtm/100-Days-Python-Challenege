@@ -1,19 +1,17 @@
-RESTapi = "REprentational state transfer"
+# RESTapi = "REprentational state transfer"
 
-restapi = "workflow --> Client + api + server + databse"
+# restapi = "workflow --> Client + api + server + databse"
 
-rulesforrestapi = "1.Use HTTP request verbs \
-    2.Use specificc pattren of routes/endpoint url's"
+# rulesforrestapi = "1.Use HTTP request verbs \
+#     2.Use specificc pattren of routes/endpoint url's"
 
 # HTTP_VERBS = [GET,POST,PUT,PATCH,DELETE]
-routeandemdpoint = "/elephant/giraff/hippos."
+# routeandemdpoint = "/elephant/giraff/hippos."
 import random
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
-from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField
 
 app = Flask(__name__)
 app.secret_key = "secretkeytocallthefroommaybe"
@@ -45,19 +43,6 @@ class Cafe(db.Model):
     has_sockets: Mapped[bool] = mapped_column(Boolean, nullable=False)
     can_take_calls: Mapped[bool] = mapped_column(Boolean, nullable=False)
     coffee_price: Mapped[str] = mapped_column(String(250), nullable=True)
-
-
-class CafeForm(FlaskForm):
-    name = StringField("Cafe Name")
-    map_url = StringField("Cafe Map URL")
-    img_url = StringField("Cafe Image URL")
-    location = StringField("Cafe Location")
-    seats = StringField("Cafe Seats")
-    has_toilet = BooleanField("Has Toilet (True/False)")
-    has_wifi = BooleanField("Has Wifi (True/False)")
-    has_sockets = BooleanField("Has Sockets (True/False)")
-    can_take_calls = BooleanField("Can Take Calls (True/False)")
-    coffee_price = StringField("Coffee Price")
 
 
 with app.app_context():
@@ -203,7 +188,7 @@ def updatecafe(cafe_id):
 
 
 # HTTP DELETE - Delete Record
-@app.route("/report-closed/<cafe_id>",methods=['DELETE'])
+@app.route("/report-closed/<cafe_id>", methods=["DELETE"])
 def deletecafe(cafe_id):
     if request.args.get("api-key") == "TopSecretAPIKey":
         cafe = db.session.execute(db.select(Cafe).where(Cafe.id == cafe_id)).scalar()
