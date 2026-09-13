@@ -12,7 +12,8 @@ from datetime import date
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8BYkEfBA6O6donzWlSihBXox7C0sKR6b"
 Bootstrap5(app)
-
+ckeditor = CKEditor(app=app)
+ckeditor.init_app(app=app)
 
 # CREATE DATABASE
 class Base(DeclarativeBase):
@@ -43,14 +44,16 @@ with app.app_context():
 def get_all_posts():
     # TODO: Query the database for all the posts. Convert the data to a python list.
     posts = []
+    result = db.session.execute(db.select(BlogPost)).scalars().all()
+    posts = result
     return render_template("index.html", all_posts=posts)
 
 
 # TODO: Add a route so that you can click on individual posts.
-@app.route("/")
+@app.route("/posts/<int:post_id>")
 def show_post(post_id):
     # TODO: Retrieve a BlogPost from the database based on the post_id
-    requested_post = "Grab the post from your database"
+    requested_post = db.get_or_404(BlogPost,post_id)
     return render_template("post.html", post=requested_post)
 
 
