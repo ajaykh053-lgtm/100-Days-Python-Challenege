@@ -79,7 +79,7 @@ def add_cafe():
         with open("day62/cafe-data.csv", mode="a", encoding="utf-8") as csv_file:
             csv_file.write(
                 f"\n{form.cafe.data},"
-                f"{form.location.data},"
+                f'"{form.location.data}",'
                 f"{form.open.data},"
                 f"{form.close.data},"
                 f"{form.coffee_rating.data},"
