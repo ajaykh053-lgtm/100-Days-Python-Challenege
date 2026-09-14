@@ -12,9 +12,10 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
+import flask_bootstrap
 
 app = Flask(__name__)
-
+bootstrap = flask_bootstrap.Bootstrap5(app)
 
 # CREATE DATABASE
 class Base(DeclarativeBase):

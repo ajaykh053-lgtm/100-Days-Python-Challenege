@@ -4,6 +4,43 @@
 <head>
     <meta charset="UTF-8" />
     <title>Editing</title>
+    <style>
+        body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1 {
+        color: #343a40;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+      }
+      label {
+        margin-bottom: 5px;
+      }
+      input {
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+
+    </style>
+
 </head>
 
 <body>
@@ -14,12 +51,11 @@
     <p>Book Name {{book['rating']}}</p>
     <form action="{{url_for('Edit',book_id=book['id'])}}" method="POST">
         <input type="text" placeholder="New rating" name="new_rating">
-        <a href="index.html"><button type="submit" style="margin: 5px; display: flex; flex-direction: column">Change
+        <a href="index.html"><button type="submit" >Change
                 rating</button></a>
     </form>
     {% endif %}
     {% endfor %}
-
 </body>
 
 </html>
