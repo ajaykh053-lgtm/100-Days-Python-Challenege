@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FloatField, IntegerField
+from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired
 
 load_dotenv()
@@ -64,11 +64,8 @@ class editmovie_form(FlaskForm):
 @app.route("/")
 def home():
     with app.app_context():
-        result = db.session.execute(db.select(Movies).order_by(Movies.rating))
+        result = db.session.execute(db.select(Movies).order_by(Movies.ranking))
         all_movies = result.scalars().all()
-        for i in range(len(all_movies)):
-            all_movies[i].ranking = len(all_movies) - i
-        db.session.commit()
     return render_template("index.html", movie_list=all_movies)
 
 
@@ -110,13 +107,19 @@ def editmovie():
         movie.rating = float(request.form["rating"])
         movie.review = request.form["review"]
         db.session.commit()
+        with app.app_context():
+            result = db.session.execute(db.select(Movies).order_by(Movies.rating))
+            all_movies = result.scalars().all()
+            for i in range(len(all_movies)):
+                all_movies[i].ranking = len(all_movies) - i
+                db.session.commit()
         return redirect(url_for("home"))
     return render_template("edit.html", movie=movie, form=edit_form)
 
 
 @app.route("/find/<int:movie_api_id>")
 def find_movie(movie_api_id):
-    print(movie_api_id)
+    # print(movie_api_id)
     if movie_api_id:
         movie_api_url = f"{os.environ['MOVIE_DB_INFO_URL']}/{movie_api_id}"
         response = requests.get(
@@ -133,7 +136,7 @@ def find_movie(movie_api_id):
         db.session.add(new_movie)
         db.session.commit()
         movie = db.get_or_404(Movies,new_movie.id)
-        print(movie.id)
+        # print(movie.id)
     return redirect(url_for("editmovie", id=movie.id))
 
 
