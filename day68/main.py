@@ -68,9 +68,9 @@ def register():
         )
         with app.app_context():
             new_user = User(
-                name=request.form["name"],
-                email=request.form["email"],
-                password=hash_and_salted_password,
+                name=request.form["name"], # type: ignore
+                email=request.form["email"],# type: ignore
+                password=hash_and_salted_password,# type: ignore
             )
             db.session.add(new_user)
             db.session.commit()
