@@ -82,7 +82,7 @@ def randomcafe():
 
 @app.route("/Getall")
 def allcafe():
-    cafes = db.session.execute(db.select(Cafe).order_by(Cafe.name)).scalars().all()
+    cafes = db.session.execute(db.select(Cafe).order_by(Cafe.id)).scalars().all()
     cafe_dict = {}
     for cafe in cafes:
         cafelist = {
