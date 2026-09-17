@@ -6,6 +6,7 @@
 #     2.Use specificc pattren of routes/endpoint url's"
 
 # HTTP_VERBS = [GET,POST,PUT,PATCH,DELETE]
+
 # routeandemdpoint = "/elephant/giraff/hippos."
 import random
 from flask import Flask, jsonify, render_template, request
@@ -21,8 +22,6 @@ app.secret_key = "secretkeytocallthefroommaybe"
 class Base(DeclarativeBase):
     pass
 
-
-"8660709328"
 
 # Connect to Database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cafes.db"
@@ -136,13 +135,14 @@ def findcafe():
             cafe_dict[f"{cafe.id}"] = cafelist
     else:
         cafe_dict = {
-            "error": {"Not Found": "Sorry, we don't have a cafe at that location."}
+            "error": {"Not Found": "Sorry, we don't have a cafe at that location."},
+            "Respones code" : 404
         }
     return jsonify(AllCafe=cafe_dict)
 
 
 # HTTP POST - Create Record
-@app.route("/add", methods=["GET"])
+@app.route("/add", methods=["POST"])
 def cratecafe():
     with app.app_context():
         cafe = Cafe(
