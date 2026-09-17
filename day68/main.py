@@ -23,6 +23,7 @@ from flask_login import (
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret-key-goes-here"
 
+
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
@@ -68,9 +69,9 @@ def register():
         )
         with app.app_context():
             new_user = User(
-                name=request.form["name"], # type: ignore
-                email=request.form["email"],# type: ignore
-                password=hash_and_salted_password,# type: ignore
+                name=request.form["name"],  # type: ignore
+                email=request.form["email"],  # type: ignore
+                password=hash_and_salted_password,  # type: ignore
             )
             db.session.add(new_user)
             db.session.commit()
@@ -86,17 +87,19 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
         with app.app_context():
-            result = db.session.execute(db.select(User).where(User.email == email)).scalar()
+            result = db.session.execute(
+                db.select(User).where(User.email == email)
+            ).scalar()
             if not result:
                 flash("That email does not exist, please try again.")
-                return redirect(url_for('login'))
+                return redirect(url_for("login"))
             elif not check_password_hash(result.password, password):
-                flash('Password incorrect, please try again.')
-                return redirect(url_for('login'))
+                flash("Password incorrect, please try again.")
+                return redirect(url_for("login"))
             else:
                 login_user(result)
-                return redirect(url_for('secrets'))
-    return render_template("login.html",logged_in=current_user.is_authenticated)
+                return redirect(url_for("secrets"))
+    return render_template("login.html", logged_in=current_user.is_authenticated)
 
 
 @app.route("/secrets")
@@ -104,6 +107,7 @@ def login():
 def secrets():
     # print(current_user.name)
     return render_template("secrets.html", user=current_user.name)
+
 
 # @m87052833@1234
 @app.route("/logout")
