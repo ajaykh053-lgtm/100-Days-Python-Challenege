@@ -15,7 +15,9 @@ def calculate_love_score(name1, name2):
     second_digit = l + o + v + e
 
     score = int(str(first_digit) + str(second_digit))
-    print(score)
+    print(f"Your nad your crush love score is {score}")
 
 
-calculate_love_score(name1="Ajay", name2="")
+calculate_love_score(
+    name1=input("Enter your name : "), name2=input("Enter your crush name : ")
+)
