@@ -142,7 +142,7 @@ def findcafe():
 
 
 # HTTP POST - Create Record
-@app.route("/add", methods=["POST"])
+@app.route("/add", methods=["GET","POST"])
 def cratecafe():
     with app.app_context():
         cafe = Cafe(
