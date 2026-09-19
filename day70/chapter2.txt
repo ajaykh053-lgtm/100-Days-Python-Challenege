@@ -1,0 +1,1 @@
+Chapter two is created using touch and this is written with echo commands
