@@ -113,9 +113,9 @@ def show_post(post_id):
     requested_post = db.get_or_404(BlogPost, post_id)
     if request.method == "POST":
         commnet = Comment(
-            text=commentform.body.data, 
-            author_id=current_user.id,  # from flask_login
-            post_id=post_id,
+            text=commentform.body.data, #type:ignore
+            author_id=current_user.id,  # from flask_login  #type:ignore
+            post_id=post_id, #type:ignore
         )
         db.session.add(commnet)
         db.session.commit()
@@ -141,9 +141,9 @@ def register():
                 request.form["password"], method="pbkdf2:sha256", salt_length=8
             )
             new_user = Bloguser(
-                email=registerform.email.data,
-                password=hash_and_salted_password,
-                name=registerform.name.data,
+                email=registerform.email.data, #type:ignore
+                password=hash_and_salted_password, #type:ignore
+                name=registerform.name.data, #type:ignore
             )
             db.session.add(new_user)
             db.session.commit()
@@ -193,12 +193,12 @@ def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
         new_post = BlogPost(
-            title=request.form["title"],
-            subtitle=request.form["subtitle"],
-            body=request.form["body"],
-            img_url=request.form["img_url"],
-            author=current_user,
-            date=date.today().strftime("%B %d, %Y"),
+            title=request.form["title"], #type:ignore
+            subtitle=request.form["subtitle"], #type:ignore
+            body=request.form["body"], #type:ignore
+            img_url=request.form["img_url"], #type:ignore
+            author=current_user, #type:ignore
+            date=date.today().strftime("%B %d, %Y"), #type:ignore
         )
         db.session.add(new_post)
         db.session.commit()
