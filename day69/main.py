@@ -1,9 +1,11 @@
-##Blog Post Final..!
-
+##Blog Post PreFinal..!
+import os
+import smtplib
 from datetime import date
 from flask import Flask, abort, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
+from dotenv import load_dotenv
 
 # from flask_gravatar import Gravatar
 from flask_login import (
@@ -22,6 +24,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # Import your forms from the forms.py
 from forms import CreatePostForm, Registerform, Loginform, Commentform
+
+load_dotenv()
 
 
 def admin_only(f):
@@ -56,7 +60,7 @@ class Base(DeclarativeBase):
     pass
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///postsprefinal.db"
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -115,15 +119,17 @@ def show_post(post_id):
     requested_post = db.get_or_404(BlogPost, post_id)
     if request.method == "POST":
         commnet = Comment(
-            text=commentform.body.data, #type:ignore
+            text=commentform.body.data,  # type: ignore
             author_id=current_user.id,  # from flask_login  #type:ignore
-            post_id=post_id, #type:ignore
+            post_id=post_id,  # type: ignore
         )
         db.session.add(commnet)
         db.session.commit()
     result = db.session.execute(db.select(Comment).where(Comment.post_id == post_id))
     comments = result.scalars().all()
-    return render_template("post.html", post=requested_post, form=commentform,commentlist=comments)
+    return render_template(
+        "post.html", post=requested_post, form=commentform, commentlist=comments
+    )
 
 
 # TODO: Use Werkzeug to hash the user's password when creating a new user.
@@ -143,9 +149,9 @@ def register():
                 request.form["password"], method="pbkdf2:sha256", salt_length=8
             )
             new_user = Bloguser(
-                email=registerform.email.data, #type:ignore
-                password=hash_and_salted_password, #type:ignore
-                name=registerform.name.data, #type:ignore
+                email=registerform.email.data,  # type: ignore
+                password=hash_and_salted_password,  # type: ignore
+                name=registerform.name.data,  # type: ignore
             )
             db.session.add(new_user)
             db.session.commit()
@@ -195,12 +201,12 @@ def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
         new_post = BlogPost(
-            title=request.form["title"], #type:ignore
-            subtitle=request.form["subtitle"], #type:ignore
-            body=request.form["body"], #type:ignore
-            img_url=request.form["img_url"], #type:ignore
-            author=current_user, #type:ignore
-            date=date.today().strftime("%B %d, %Y"), #type:ignore
+            title=request.form["title"],  # type: ignore
+            subtitle=request.form["subtitle"],  # type: ignore
+            body=request.form["body"],  # type: ignore
+            img_url=request.form["img_url"],  # type: ignore
+            author=current_user,  # type: ignore
+            date=date.today().strftime("%B %d, %Y"),  # type: ignore
         )
         db.session.add(new_post)
         db.session.commit()
@@ -248,10 +254,31 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 @login_required
 def contact():
-    return render_template("contact.html")
+    if request.method == "POST":
+        # print(request.form['name'])
+        # print(request.form['email'])
+        # print(request.form['phone'])
+        # print(request.form['message'])
+        connection = smtplib.SMTP("smtp.gmail.com", 587)
+        connection.starttls()
+        connection.login(
+            user=os.environ["EMAIL_KEY"], password=os.environ["PASSWORD_KEY"]
+        )
+        msg = f"Subject:New Message\n\nName: {request.form['name']}\nEmail: {request.form['email']}\nPhone: {request.form['phone']}\nMessage:{request.form['message']}"
+
+        connection.sendmail(
+            from_addr=request.form["email"],
+            to_addrs=os.environ["DEVELOPER_EMAIL"],
+            msg=msg,
+        )
+        return render_template(
+            "contact.html", msg_sent=True, heading="Successfully sent your message."
+        )
+    else:
+        return render_template("contact.html", heading="Contact Me")
 
 
 if __name__ == "__main__":
