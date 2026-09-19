@@ -1,10 +1,4 @@
-
-
-
-#Blogpost part 3 with Database 
-
-
-
+# Blogpost part 3 with Database
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
@@ -80,12 +74,12 @@ def new_post():
     form = PostForm()
     if request.method == "POST":
         post = BlogPost(
-            title=form.title.data, #type:ignore
-            subtitle=form.subtitle.data, #type:ignore
-            date=date.today().strftime("%B %d %Y"), #type:ignore
-            body=form.body.data, #type:ignore
-            author=form.author.data, #type:ignore
-            img_url=form.img_url.data, #type:ignore
+            title=form.title.data,  # type: ignore
+            subtitle=form.subtitle.data,  # type: ignore
+            date=date.today().strftime("%B %d %Y"),  # type: ignore
+            body=form.body.data,  # type: ignore
+            author=form.author.data,  # type: ignore
+            img_url=form.img_url.data,  # type: ignore
         )
         db.session.add(post)
         db.session.commit()
