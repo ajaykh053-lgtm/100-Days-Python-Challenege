@@ -1,7 +1,7 @@
 from flask import Flask, url_for, render_template
 from pprint import pprint
 import requests
-
+##Blog Post Part1
 app = Flask(__name__)
 
 Endpoint = "https://api.npoint.io/fff2c15cf4b2280f9863"

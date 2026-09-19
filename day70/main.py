@@ -5,7 +5,7 @@ import os
 
 load_dotenv()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv("FLASK_KEY")
+app.config["SECRET_KEY"] = os.getenv("FLASK_KEY")
 
 
 @app.route("/")

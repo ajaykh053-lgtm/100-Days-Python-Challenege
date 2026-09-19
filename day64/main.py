@@ -128,10 +128,10 @@ def find_movie(movie_api_id):
         )
         data = response.json()
         new_movie = Movies(
-            title=data["title"],
-            year=data["release_date"].split("-")[0],
-            img_url=f"{os.environ['MOVIE_DB_IMAGE_URL']}{data['poster_path']}",
-            description=data["overview"],
+            title=data["title"], #type:ignore
+            year=data["release_date"].split("-")[0], #type:ignore
+            img_url=f"{os.environ['MOVIE_DB_IMAGE_URL']}{data['poster_path']}", #type:ignore
+            description=data["overview"], #type:ignore
         )
         db.session.add(new_movie)
         db.session.commit()

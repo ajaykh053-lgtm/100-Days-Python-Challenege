@@ -64,17 +64,17 @@ def randomcafe():
     ).scalar()
     return jsonify(
         cafe={
-            "id": random_cafe.id,
-            "name": random_cafe.name,
-            "map_url": random_cafe.map_url,
-            "img_url": random_cafe.img_url,
-            "location": random_cafe.location,
-            "seats": random_cafe.seats,
-            "has_toilet": random_cafe.has_toilet,
-            "has_wifi": random_cafe.has_wifi,
-            "has_sockets": random_cafe.has_sockets,
-            "can_take_calls": random_cafe.can_take_calls,
-            "coffee_price": random_cafe.coffee_price,
+            "id": random_cafe.id,  # type: ignore
+            "name": random_cafe.name,  # type: ignore
+            "map_url": random_cafe.map_url,  # type: ignore
+            "img_url": random_cafe.img_url,  # type: ignore
+            "location": random_cafe.location,  # type: ignore
+            "seats": random_cafe.seats,  # type: ignore
+            "has_toilet": random_cafe.has_toilet,  # type: ignore
+            "has_wifi": random_cafe.has_wifi,  # type: ignore
+            "has_sockets": random_cafe.has_sockets,  # type: ignore
+            "can_take_calls": random_cafe.can_take_calls,  # type: ignore
+            "coffee_price": random_cafe.coffee_price,  # type: ignore
         }
     )
 
@@ -136,26 +136,26 @@ def findcafe():
     else:
         cafe_dict = {
             "error": {"Not Found": "Sorry, we don't have a cafe at that location."},
-            "Respones code" : 404
+            "Respones code": 404,
         }
     return jsonify(AllCafe=cafe_dict)
 
 
 # HTTP POST - Create Record
-@app.route("/add", methods=["GET","POST"])
+@app.route("/add", methods=["GET", "POST"])
 def cratecafe():
     with app.app_context():
         cafe = Cafe(
-            name=request.form.get("name"),
-            map_url=request.form.get("map_url"),
-            img_url=request.form.get("img_url"),
-            location=request.form.get("location"),
-            seats=request.form.get("seats"),
-            has_toilet=bool(request.form.get("has_toilet")),
-            has_wifi=bool(request.form.get("has_wifi")),
-            has_sockets=bool(request.form.get("has_sockets")),
-            can_take_calls=bool(request.form.get("can_take_calls")),
-            coffee_price=request.form.get("coffee_price"),
+            name=request.form.get("name"),  # type: ignore
+            map_url=request.form.get("map_url"),  # type: ignore
+            img_url=request.form.get("img_url"),  # type: ignore
+            location=request.form.get("location"),  # type: ignore
+            seats=request.form.get("seats"),  # type: ignore
+            has_toilet=bool(request.form.get("has_toilet")),  # type: ignore
+            has_wifi=bool(request.form.get("has_wifi")),  # type: ignore
+            has_sockets=bool(request.form.get("has_sockets")),  # type: ignore
+            can_take_calls=bool(request.form.get("can_take_calls")),  # type: ignore
+            coffee_price=request.form.get("coffee_price"),  # type: ignore
         )
         db.session.add(cafe)
         db.session.commit()

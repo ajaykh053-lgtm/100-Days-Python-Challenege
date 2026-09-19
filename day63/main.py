@@ -58,9 +58,9 @@ def add():
     if request.method == "POST":
         with app.app_context():
             new_book = Book(
-                title=request.form["Bookname"],
-                author=request.form["BookAuthor"],
-                rating=request.form["Rating"],
+                title=request.form["Bookname"], #type:ignore
+                author=request.form["BookAuthor"], #type:ignore
+                rating=request.form["Rating"], #type:ignore
             )
             db.session.add(new_book)
             db.session.commit()
@@ -74,7 +74,7 @@ def Edit(book_id):
             change_rating = db.session.execute(db.select(Book).where(Book.id == book_id)).scalar()
             print(change_rating)
             print(request.form['new_rating'])
-            change_rating.rating = request.form['new_rating']
+            change_rating.rating = request.form['new_rating'] #type:ignore
             db.session.commit()
         return redirect(url_for('index'))
     else :

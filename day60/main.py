@@ -1,7 +1,7 @@
 import requests
 import smtplib
 from flask import Flask, render_template,request
-
+##Blog Post Part 2
 # USE YOUR OWN npoint LINK! ADD AN IMAGE URL FOR YOUR POST. 👇
 posts = requests.get("https://api.npoint.io/fff2c15cf4b2280f9863").json()
 
