@@ -247,7 +247,7 @@ def delete_post(post_id):
     db.session.delete(post_to_delete)
     for comments in comments_to_delete:
         db.session.delete(comments)
-        db.session.commit()
+    db.session.commit()
     return redirect(url_for("get_all_posts"))
 
 
