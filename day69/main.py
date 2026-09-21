@@ -164,7 +164,6 @@ def register():
 def login():
     loginform = Loginform()
     if request.method == "POST":
-        # print("form data sent and collected")
         result = db.session.execute(
             db.select(Bloguser).where(Bloguser.email == loginform.email.data)
         )
@@ -262,10 +261,6 @@ def about():
 @login_required
 def contact():
     if request.method == "POST":
-        # print(request.form['name'])
-        # print(request.form['email'])
-        # print(request.form['phone'])
-        # print(request.form['message'])
         connection = smtplib.SMTP("smtp.gmail.com", 587)
         connection.starttls()
         connection.login(
@@ -287,8 +282,3 @@ def contact():
 
 if __name__ == "__main__":
     app.run(debug=True, host="localhost", port=5050)
-
-
-##Test Credentials
-# Admin email: ajaykh053@gmail.com password : Blogposts@1234 username: Ajay
-# Test email: test@gmail.com password: test@1234 username: Tester
