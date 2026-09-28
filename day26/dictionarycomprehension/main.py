@@ -79,10 +79,10 @@ for key, value in student_data_frame.items():
     print(f"{key} : {value}")
     print("\n")
 
-for (index, row) in student_data_frame.iterrows():
+for index, row in student_data_frame.iterrows():
     print(index)
     print(row)
     print(row.Student)
     print(row.Score)
-    if (row.Student=="Angela"):
+    if row.Student == "Angela":
         print(row.Score)
