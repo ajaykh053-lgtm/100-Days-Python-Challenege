@@ -1,19 +1,18 @@
-#File Path
+# File Path
 
-# / root 
+# / root
 # /work
-#/work/report.doc
-#/work/project
-#/wprk/priect/talk.ppt
+# /work/report.doc
+# /work/project
+# /wprk/priect/talk.ppt
 
 # sreach in current file
 
-#./talk.ppt
+# ./talk.ppt
 # ..//report.doc
 
 
-
-# # opening and closing the file 
+# # opening and closing the file
 # file = open("example.txt")
 # content= file.read()
 # print(content)
@@ -25,10 +24,10 @@
 #     content=file.read()
 #     print(content)
 
-#writing into the file
-with open("newfile.txt",mode="w") as file :
+# writing into the file
+with open("newfile.txt", mode="w") as file:
     file.write("New text .")
 
-#appending the text to the file 
-with open("newfile.txt",mode="a") as file :
+# appending the text to the file
+with open("newfile.txt", mode="a") as file:
     file.write("\nNew text .")
