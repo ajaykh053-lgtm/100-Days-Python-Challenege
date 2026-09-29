@@ -1,12 +1,13 @@
 from turtle import Turtle
 
-class Desing():
+
+class Desing:
     def Road(self):
-        road=Turtle("arrow")
+        road = Turtle("arrow")
         road.color("black")
-        y_pos=-240
+        y_pos = -240
         road.penup()
-        road.goto(600,y_pos)
+        road.goto(600, y_pos)
         road.setheading(180)
         for _ in range(4):
             road.pendown()
@@ -18,4 +19,3 @@ class Desing():
             road.left(90)
             road.forward(70)
             road.left(90)
-        
