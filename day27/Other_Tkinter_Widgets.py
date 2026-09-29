@@ -67,7 +67,9 @@ def checkbutton_used():
 
 # variable to hold on to checked state, 0 is off, 1 is on.
 checked_state = IntVar()
-checkbutton = Checkbutton(text="Is On?", variable=checked_state, command=checkbutton_used)
+checkbutton = Checkbutton(
+    text="Is On?", variable=checked_state, command=checkbutton_used
+)
 checked_state.get()
 checkbutton.pack()
 
