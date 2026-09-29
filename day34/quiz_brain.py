@@ -1,4 +1,6 @@
 import html
+
+
 class QuizBrain:
 
     def __init__(self, q_list):
@@ -17,7 +19,7 @@ class QuizBrain:
         return f"Q.{self.question_number}: {self.q_text}"
 
     def check_answer(self, user_answer):
-        correct_answer = self.current_question.answer # type: ignore
+        correct_answer = self.current_question.answer  # type: ignore
         if user_answer.lower() == correct_answer.lower():
             self.score += 1
             return True
