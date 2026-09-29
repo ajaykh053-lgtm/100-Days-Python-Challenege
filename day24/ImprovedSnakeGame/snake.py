@@ -8,6 +8,7 @@ DOWN = 270
 LEFT = 180
 RIGHT = 0
 
+
 class Snake:
     def __init__(self):
         self.segments = []
@@ -16,7 +17,7 @@ class Snake:
 
     def add_segment(self, position):
         new_segment = Turtle(shape="circle")
-        new_segment.color("black","lime")
+        new_segment.color("black", "lime")
         new_segment.penup()
         new_segment.goto(position)
         self.segments.append(new_segment)
@@ -46,17 +47,18 @@ class Snake:
 
     def right(self):
         self.head.setheading(RIGHT)
-    
+
     def Transfer_negative_side(self):
-        self.pos=self.head.position()*-1
+        self.pos = self.head.position() * -1
         self.head.goto(self.pos)
 
     def Transfer_postive_side(self):
-        self.pos=self.head.position()*-1
+        self.pos = self.head.position() * -1
         self.head.goto(self.pos)
+
     def reset(self):
         for seg in self.segments:
-            seg.goto(2000,2000)
+            seg.goto(2000, 2000)
         self.segments.clear()
         self.create_snake()
-        self.head-self.segments[0]
+        self.head - self.segments[0]
