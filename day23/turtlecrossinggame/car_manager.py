@@ -5,7 +5,7 @@ COLORS = ["red", "orange", "yellow", "green", "blue", "purple"]
 STARTING_MOVE_DISTANCE = 10
 MOVE_INCREMENT = 5
 CAR_STARTING_POSITION_X = 620
-random_y_pos = [-205, -135 , -60 , 15 , 70 , 149, 221]
+random_y_pos = [-205, -135, -60, 15, 70, 149, 221]
 
 
 class CarManager:
@@ -13,7 +13,7 @@ class CarManager:
         self.all_cars = []
 
     def create_car(self):
-        random_chance = random.randint(1,12)
+        random_chance = random.randint(1, 12)
         if random_chance == 1:
             new_car = Turtle("square")
             new_car.shapesize(stretch_len=4, stretch_wid=1.5)
