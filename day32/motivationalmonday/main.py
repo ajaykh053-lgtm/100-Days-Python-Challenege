@@ -3,11 +3,12 @@ import random
 import smtplib
 import datetime as dt
 from dotenv import load_dotenv
+
 load_dotenv()
 now = dt.datetime.now()
 weekday = now.weekday()
-#if you want to get the email or the msg you need to change the if condition comment out whole if and then print the weekday
-#then change condition you good to go
+# if you want to get the email or the msg you need to change the if condition comment out whole if and then print the weekday
+# then change condition you good to go
 # print(weekday)
 if weekday == 5:
     # -----------------Getting a random quote from file--------------------#
