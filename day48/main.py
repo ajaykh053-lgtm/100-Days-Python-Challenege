@@ -8,7 +8,7 @@ chrome_option = webdriver.ChromeOptions()
 chrome_option.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=chrome_option)
 
-amazon="https://www.amazon.in/Aluminium-Ergonomic-Adjustable-Tabletop-Compatible/dp/B0F7B1W5MN?th=1"
+amazon = "https://www.amazon.in/Aluminium-Ergonomic-Adjustable-Tabletop-Compatible/dp/B0F7B1W5MN?th=1"
 
 driver.get(url=amazon)
 
@@ -30,16 +30,20 @@ print(button.size)
 
 # Using CSSSELECTOR
 
-a_tag = driver.find_element(By.CSS_SELECTOR,value="._p13n-desktop-sims-fbt_fbt-desktop_asin-link__3oiMu")
+a_tag = driver.find_element(
+    By.CSS_SELECTOR, value="._p13n-desktop-sims-fbt_fbt-desktop_asin-link__3oiMu"
+)
 print(a_tag.text)
-ele = driver.find_element(By.CSS_SELECTOR,value=".product-title-word-break")
+ele = driver.find_element(By.CSS_SELECTOR, value=".product-title-word-break")
 print(ele.text)
 
 # Using XPATH
 
-print(driver.find_element(By.XPATH,value="/html/body/div[1]/div[1]/div[2]/div[5]/div[4]/div[56]/div/ul").text)
-
-
+print(
+    driver.find_element(
+        By.XPATH, value="/html/body/div[1]/div[1]/div[2]/div[5]/div[4]/div[56]/div/ul"
+    ).text
+)
 
 
 # python = "https://www.python.org/"
