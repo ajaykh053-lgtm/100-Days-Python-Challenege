@@ -12,9 +12,8 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     year = datetime.date.today().year
-    number = random.randint(1,3)
-    return render_template("copyright.html",num=number,year=year)
-
+    number = random.randint(1, 3)
+    return render_template("copyright.html", num=number, year=year)
 
 
 @app.route("/<username>")
@@ -40,11 +39,13 @@ def index(username):
         age=respones_age.json()["age"],
     )
 
+
 @app.route("/blog/<num>")
 def get_blog(num):
     print(num)
-    posts = requests.get(url=os.environ['BLOG_URL']).json()
-    return render_template("blog.html",blogs=posts,number=num)
+    posts = requests.get(url=os.environ["BLOG_URL"]).json()
+    return render_template("blog.html", blogs=posts, number=num)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
