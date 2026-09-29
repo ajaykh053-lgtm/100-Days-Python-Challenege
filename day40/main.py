@@ -65,6 +65,7 @@ for destination in sheet_data:
         pprint(f"Lower price flight found to {destination['city']}!")
         data_manager.update_lowest_price(destination["id"], cheapest_flight.price)
         import smtplib
+
         connection = smtplib.SMTP("smtp.gmail.com", 587)
         connection.starttls()
         connection.login(user=os.environ["MY_EMAIL"], password=os.environ["PASSWORD"])
@@ -76,13 +77,13 @@ for destination in sheet_data:
                 msg=message,
             )
         # notification_manager.send_sms(
-            # message_body=f"Low price alert! Only ₹ {cheapest_flight.price} to fly "
+        # message_body=f"Low price alert! Only ₹ {cheapest_flight.price} to fly "
         #                  f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
         #                  f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         # )
         # SMS not working? Try whatsapp instead.
         # notification_manager.send_whatsapp(
-            # message_body=f"Low price alert! Only ₹ {cheapest_flight.price} to fly "
+        # message_body=f"Low price alert! Only ₹ {cheapest_flight.price} to fly "
         #     f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
         #     f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         # )
