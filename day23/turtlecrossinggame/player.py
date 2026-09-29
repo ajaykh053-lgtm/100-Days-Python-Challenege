@@ -1,8 +1,10 @@
 from turtle import Turtle
+
 STARTING_POSITION = (0, -280)
 MOVE_DISTANCE = 10
 FINISH_LINE_Y = 280
 FONT = ("Courier", 24, "bold")
+
 
 class Player(Turtle):
     def __init__(self):
@@ -21,5 +23,3 @@ class Player(Turtle):
 
     def finish_line_y(self):
         self.creating_turtle()
-    
-    
