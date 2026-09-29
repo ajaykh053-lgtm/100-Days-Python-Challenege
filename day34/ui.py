@@ -1,4 +1,4 @@
-from tkinter import * # type: ignore
+from tkinter import *  # type: ignore
 from quiz_brain import QuizBrain
 
 THEME_COLOR = "#375362"
@@ -48,11 +48,14 @@ class QuizInterface:
             q_text = self.quiz.next_question()
             self.score_lable.config(text=f"Score: {self.quiz.score}")
             self.canvas.itemconfig(self.question_text, text=q_text)
-            
+
         else:
-            self.canvas.itemconfig(self.question_text, text="You've reached the end of the quizz.")
+            self.canvas.itemconfig(
+                self.question_text, text="You've reached the end of the quizz."
+            )
             self.true.config(state="disabled")
             self.false.config(state="disabled")
+
     def checkfortrue(self):
         self.give_feedback(self.quiz.check_answer("True"))
 
@@ -66,4 +69,3 @@ class QuizInterface:
         else:
             self.canvas.config(bg="red")
         self.window.after(1000, self.get_next_question)
-    
