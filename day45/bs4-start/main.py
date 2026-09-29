@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 from pprint import pprint
+
 # respones = requests.get(url="https://appbrewery.github.io/news.ycombinator.com/")
 # soup_static_web = BeautifulSoup(respones.text,'html.parser')
 # a_tag = soup_static_web.find_all(name="a", class_="storylink")
-result =  requests.get(url="https://news.ycombinator.com/news")
-soup_live_web = BeautifulSoup(result.text,'html.parser')
+result = requests.get(url="https://news.ycombinator.com/news")
+soup_live_web = BeautifulSoup(result.text, "html.parser")
 span_tag = soup_live_web.find_all(name="span", class_="titleline")
 article_texts = []
 article_links = []
@@ -15,13 +16,16 @@ article_links = []
 #     link = name.get("href")
 #     article_texts.append(link)
 for name in span_tag:
-    text = name.find(name="a").getText() #type:ignore
+    text = name.find(name="a").getText()  # type: ignore
     # pprint(text)
     article_texts.append(text)
-    link = name.find(name="a").get("href") #type:ignore
+    link = name.find(name="a").get("href")  # type: ignore
     # pprint(link)
     article_links.append(link)
-article_upvotes = [int(score.getText().split()[0]) for score in soup_live_web.find_all(name="span", class_="score")]
+article_upvotes = [
+    int(score.getText().split()[0])
+    for score in soup_live_web.find_all(name="span", class_="score")
+]
 # print(article_texts)
 # print(article_links)
 # print(article_upvotes)
@@ -34,65 +38,6 @@ print(article_links[largest_index])
 
 
 # This is gonna give me the mosted voted news in hacker news top 30 News
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # with open(file="day45/bs4-start/website.html" , mode="r") as file:
