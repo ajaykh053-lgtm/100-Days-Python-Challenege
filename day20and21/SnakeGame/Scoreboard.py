@@ -2,8 +2,9 @@ from turtle import Turtle
 
 ALIGNMENT = "center"
 FONT = ("Courier", 15, "bold")
-FONT1=("Helvetica", 20, "bold")
-Score_list=[]
+FONT1 = ("Helvetica", 20, "bold")
+Score_list = []
+
 
 class Scoreboard(Turtle):
     def __init__(self):
@@ -26,8 +27,8 @@ class Scoreboard(Turtle):
         self.score += 1
         Score_list.append(self.score)
         self.write(f"Score = {self.score}", align=ALIGNMENT, font=FONT)
-    
+
     def Max_Score(self):
-        self.score=max(Score_list)
-        self.goto(0,-100)
+        self.score = max(Score_list)
+        self.goto(0, -100)
         self.write(f" Your Max is Score = {self.score}", align=ALIGNMENT, font=FONT1)
