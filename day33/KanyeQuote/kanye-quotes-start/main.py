@@ -1,4 +1,4 @@
-from tkinter import Tk, Canvas, PhotoImage, Button,Label
+from tkinter import Tk, Canvas, PhotoImage, Button, Label
 import requests
 
 
@@ -27,7 +27,7 @@ canvas.grid(row=0, column=0)
 kanye_img = PhotoImage(file="day33/KanyeQuote/kanye-quotes-start/kanye.png")
 kanye_button = Button(image=kanye_img, highlightthickness=0, command=get_quote)
 kanye_button.grid(row=1, column=0)
-kanye_name = Label(text="My Nigga",font=("Arial", 10, "bold"),highlightthickness=0)
-kanye_name.grid(row=2,column=0)
+kanye_name = Label(text="My Nigga", font=("Arial", 10, "bold"), highlightthickness=0)
+kanye_name.grid(row=2, column=0)
 
 window.mainloop()
