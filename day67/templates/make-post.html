@@ -29,15 +29,11 @@ include "header.html" %}
       <div class="col-lg-8 col-md-10 mx-auto">
         <!-- TODO:-Add CKEditor and render the form here -->
 
-        {% if post_id: %} 
-        {{ ckeditor.load() }} 
-        {{ ckeditor.config(name='body')}} 
-        {{render_form(form, novalidate=True, button_map={"submit":"primary"})}} 
-        {% else: %} 
-        {{ ckeditor.load() }} 
-        {{ckeditor.config(name='body') }} 
-        {{render_form(form, novalidate=True,button_map={"submit": "primary"})}} 
-        {%endif %}
+        {% if post_id: %} {{ ckeditor.load() }} {{
+        ckeditor.config(name='body')}} {{render_form(form, novalidate=True,
+        button_map={"submit":"primary"})}} {% else: %} {{ ckeditor.load() }}
+        {{ckeditor.config(name='body') }} {{render_form(form,
+        novalidate=True,button_map={"submit": "primary"})}} {%endif %}
       </div>
     </div>
   </div>
