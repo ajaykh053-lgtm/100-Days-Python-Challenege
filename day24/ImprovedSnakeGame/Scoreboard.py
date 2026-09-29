@@ -5,6 +5,7 @@ FONT = ("Courier", 15, "bold")
 FONT1 = ("Helvetica", 20, "bold")
 Score_list = []
 
+
 class Scoreboard(Turtle):
     def __init__(self):
         super().__init__()
@@ -37,4 +38,3 @@ class Scoreboard(Turtle):
 
     def increase_score(self):
         self.score += 1
-        
