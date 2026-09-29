@@ -21,8 +21,7 @@ print("""
 | |  | | (_| | | | | (_| | | | | | | (_| | | | |
 |_|  |_|\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
                      __/ |                      
-                    |___/                       """
-)
+                    |___/                       """)
 print(f"Word to guess : {placeholder}")
 # filling the blanks wiht looping statements
 
