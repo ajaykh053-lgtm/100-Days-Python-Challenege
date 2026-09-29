@@ -8,6 +8,7 @@
 
 # API Request : not preloaded need to install
 import requests
+
 respones = requests.get(url="http://api.open-notify.org/iss-now.json")
 
 
@@ -19,7 +20,7 @@ respones = requests.get(url="http://api.open-notify.org/iss-now.json")
 # 3xx : o away
 # 4xx : you screwed up Me
 # 5xx : i screwed up
-print (respones.status_code)
+print(respones.status_code)
 if respones.status_code != 200:
     respones.raise_for_status()
 
@@ -31,5 +32,3 @@ iss_position = (longitude, latitude)
 print(iss_position)
 
 # HTTP Codes
-
-
