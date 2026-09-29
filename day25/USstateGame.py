@@ -17,13 +17,13 @@ while len(Guessed_state) < 50:
         title=f"{len(Guessed_state)}/50Guess the state",
         prompt="What's another state name?",
     ).title()
-    if answer_state=="Exit":
+    if answer_state == "Exit":
         # Learned in day 26 lession and applying here
-        missing_state=[state for state in all_states if state not in Guessed_state]
+        missing_state = [state for state in all_states if state not in Guessed_state]
         # for state in all_states:
         #     if state not in Guessed_state:
         #         missing_state.append(state)
-        new_data=pandas.DataFrame(missing_state)
+        new_data = pandas.DataFrame(missing_state)
         new_data.to_csv("missing_states_names.csv")
         break
     if answer_state in all_states:
