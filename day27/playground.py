@@ -4,6 +4,7 @@ def add(*Args):
         Sum = Sum + Numbers
     return Sum
 
+
 print(add(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15))
 
 
@@ -13,9 +14,11 @@ def calculate(n, **kwargs):
     # for key,value in kwargs.items():
     #     print(key)
     #     print(value)
-    n+=kwargs["add"]
-    n+=kwargs["multiply"]
+    n += kwargs["add"]
+    n += kwargs["multiply"]
     print(n)
+
+
 calculate(2, add=3, multiply=5)
 
 # Quiz
@@ -53,19 +56,21 @@ calculate(2, add=3, multiply=5)
 # Answer = (1, 2, 3, 5)
 
 # Question 5:
-# def all_aboard(a, *args, **kw): 
+# def all_aboard(a, *args, **kw):
 #     print(a, args, kw)
 # all_aboard(4, 7, 3, 0, x=10, y=64)
-# What is the output of the code above? 
+# What is the output of the code above?
+
 
 # Answer = 4 (7, 3, 0) {'x':10,'y':64}
 class Car:
     def __init__(self, **kw):
         self.make = kw.get("make")
-        # using get fun if the value 
+        # using get fun if the value
         # donest exsist in kw it will return non
         self.model = kw.get("model")
         self.color = kw.get("color")
         self.seats = kw.get("seats")
 
-my_car=Car(make="Nisaan",model="GTR")
+
+my_car = Car(make="Nisaan", model="GTR")
