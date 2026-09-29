@@ -5,7 +5,7 @@ cal.title("Calculator")
 cal.minsize(width=320, height=500)
 
 display = Entry(width=28, justify="right", background="lightgray", borderwidth=10)
-display.place(x=0,y=0)
+display.place(x=0, y=0)
 Button7 = Button(text="7", width=5, font="Arial")
 Button7.grid(row=3, column=0)
 Button4 = Button(text="4", width=5, font="Arial")
