@@ -1,6 +1,7 @@
 from flask import Flask, url_for, render_template
 from pprint import pprint
 import requests
+
 ##Blog Post Part1
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def home():
 @app.route("/index")
 def index():
     blogs = respones
-    return render_template("index.html",posts=blogs)
+    return render_template("index.html", posts=blogs)
 
 
 @app.route("/about")
@@ -31,9 +32,12 @@ def about():
 def contact():
     return render_template("contact.html")
 
+
 @app.route("/posthtml/<int:id>")
 def getpost(id):
-    blogs=respones
-    return render_template("post.html",blog_post=blogs,post_id=id)
+    blogs = respones
+    return render_template("post.html", blog_post=blogs, post_id=id)
+
+
 if __name__ == "__main__":
     app.run(host="localhost", debug=True, port=5000)
