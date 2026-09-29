@@ -69,4 +69,3 @@ def a_function(*args):
 
 
 a_function(4, 5, 6)
- 
