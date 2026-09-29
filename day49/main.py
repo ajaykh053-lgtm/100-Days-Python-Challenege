@@ -49,11 +49,11 @@ def login():
     sleep(1)
     email_input = wait.until(ec.presence_of_element_located((By.ID, "email-input")))
     email_input.clear()
-    email_input.send_keys(os.environ['ACCOUNT_EMAIL'])
+    email_input.send_keys(os.environ["ACCOUNT_EMAIL"])
     sleep(1)
     password_input = driver.find_element(By.ID, "password-input")
     password_input.clear()
-    password_input.send_keys(os.environ['ACCOUNT_PASSWORD'])
+    password_input.send_keys(os.environ["ACCOUNT_PASSWORD"])
     sleep(1)
     submit_btn = driver.find_element(By.ID, "submit-button")
     submit_btn.click()
@@ -147,7 +147,7 @@ all_cards = retry(get_my_bookings, description="Get my bookings")
 verified_count = 0
 # Dont worry about the below error its just showing beacuse there is no data available in all_cards variable
 # beacuse the function is not called and there is nothig returned and stored in it.
-for card in all_cards: # type: ignore
+for card in all_cards:  # type: ignore
     try:
         when_paragraph = card.find_element(By.XPATH, ".//p[strong[text()='When:']]")
         when_text = when_paragraph.text
