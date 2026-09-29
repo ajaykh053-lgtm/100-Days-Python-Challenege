@@ -6,7 +6,7 @@
     {% block style %} {{bootstrap.load_css()}} {% endblock %}
   </head>
   <body>
-    {% block content %}{% endblock %}
-    {% block script %} {{bootstrap.load_js()}} {% endblock %}
+    {% block content %}{% endblock %} {% block script %} {{bootstrap.load_js()}}
+    {% endblock %}
   </body>
 </html>
