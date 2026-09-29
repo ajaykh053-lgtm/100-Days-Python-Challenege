@@ -33,7 +33,9 @@
 def add(n1, n2):
     return n1 + n2
 
+
 add(1, 2)
+
 
 # add(n1=5, n2=3)#here we only give 2
 # Unlimited
@@ -63,7 +65,7 @@ my_label = Label(text="I am a Label", font=("Arial", 24, "italic"))
 # my_label["text"] = "New Text"
 
 # my_label.pack()
-my_label.place(x=100,y=200)
+my_label.place(x=100, y=200)
 my_label.config(padx=50, pady=50)  # this is way to add padding to each item in window
 my_label.grid(row=0, column=0)
 
