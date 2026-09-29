@@ -12,7 +12,10 @@ def index():
         '<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGJnOGVqdTZld2VkdzJhaHI2ZWwyMmN1ZXFxZ2d4c3h1YTZhaWxwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RVCJ3vwebUGDpoy7Tm/giphy.gif" y>'
     )
 
+
 number = randint(0, 9999)
+
+
 @app.route("/<int:userguess>")
 def user_number(userguess):
     if userguess < number:
