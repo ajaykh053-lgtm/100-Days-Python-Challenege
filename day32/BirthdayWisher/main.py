@@ -4,6 +4,7 @@ import random
 import smtplib
 import datetime as dt
 from dotenv import load_dotenv
+
 load_dotenv()
 PLACEHOLDER = "[NAME]"
 today = dt.datetime.now()
@@ -28,5 +29,3 @@ if today_tuple in birthday_dict:
             to_addrs=f"{birthday_person["email"]}",
             msg=f"Subject  : Happy Birthdy {content}",
         )
-        
-        
