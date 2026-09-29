@@ -71,9 +71,9 @@ print(num_of_Gray_squirrel)
 print(num_of_Cinnamon_squirrel)
 print(num_of_Black_squirrel)
 
-analized_data={
-   " Fur color" : ["Gray","Red","Black"],
-   "Count" :[num_of_Gray_squirrel,num_of_Cinnamon_squirrel,num_of_Black_squirrel]
+analized_data = {
+    " Fur color": ["Gray", "Red", "Black"],
+    "Count": [num_of_Gray_squirrel, num_of_Cinnamon_squirrel, num_of_Black_squirrel],
 }
-df=pandas.DataFrame(analized_data)
+df = pandas.DataFrame(analized_data)
 df.to_csv("new_squirrel_data.csv")
