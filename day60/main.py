@@ -1,6 +1,7 @@
 import requests
 import smtplib
-from flask import Flask, render_template,request
+from flask import Flask, render_template, request
+
 ##Blog Post Part 2
 # USE YOUR OWN npoint LINK! ADD AN IMAGE URL FOR YOUR POST. 👇
 posts = requests.get("https://api.npoint.io/fff2c15cf4b2280f9863").json()
@@ -8,7 +9,7 @@ posts = requests.get("https://api.npoint.io/fff2c15cf4b2280f9863").json()
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def get_all_posts():
     return render_template("index.html", all_posts=posts)
 
@@ -18,20 +19,26 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact",methods=['GET','POST'])
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        print(request.form['name'])
-        print(request.form['email'])
-        print(request.form['phone'])
-        print(request.form['message'])
+        print(request.form["name"])
+        print(request.form["email"])
+        print(request.form["phone"])
+        print(request.form["message"])
         connection = smtplib.SMTP("smtp.gmail.com", 587)
         connection.starttls()
-        connection.login(user="ajaykh052@gmail.com",password="jwjkarwdntvnrird")
-        connection.sendmail(from_addr=request.form['email'],to_addrs="ajaykh053@gmail.com",msg=request.form['message'])
-        return render_template("contact.html",heading="Successfully sent your message.")
+        connection.login(user="ajaykh052@gmail.com", password="jwjkarwdntvnrird")
+        connection.sendmail(
+            from_addr=request.form["email"],
+            to_addrs="ajaykh053@gmail.com",
+            msg=request.form["message"],
+        )
+        return render_template(
+            "contact.html", heading="Successfully sent your message."
+        )
     else:
-        return render_template("contact.html",heading="Contact Me")
+        return render_template("contact.html", heading="Contact Me")
 
 
 @app.route("/post/<int:index>")
@@ -41,6 +48,7 @@ def show_post(index):
         if blog_post["id"] == index:
             requested_post = blog_post
     return render_template("post.html", post=requested_post)
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
