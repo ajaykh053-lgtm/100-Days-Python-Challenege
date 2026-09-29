@@ -35,7 +35,7 @@ class FlightSearch:
         if is_direct:
             query["stops"] = 1
         response = requests.get(url=SERPAPI_ENDPOINT, params=query)
-        
+
         if response.status_code != 200:
             print(f"check_flights() response code: {response.status_code}")
             return None
