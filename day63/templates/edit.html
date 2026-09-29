@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Editing</title>
     <style>
-        body {
+      body {
         background-color: #f8f9fa;
         font-family: Arial, sans-serif;
         margin: 20px;
@@ -38,24 +37,18 @@
       button:hover {
         background-color: #0056b3;
       }
-
     </style>
+  </head>
 
-</head>
-
-<body>
-    {% for book in books %}
-    {% if book['id'] == book_id %}
+  <body>
+    {% for book in books %} {% if book['id'] == book_id %}
     <p>Book Name {{book['title']}}</p>
-    <br>
+    <br />
     <p>Book Name {{book['rating']}}</p>
     <form action="{{url_for('Edit',book_id=book['id'])}}" method="POST">
-        <input type="text" placeholder="New rating" name="new_rating">
-        <a href="index.html"><button type="submit" >Change
-                rating</button></a>
+      <input type="text" placeholder="New rating" name="new_rating" />
+      <a href="index.html"><button type="submit">Change rating</button></a>
     </form>
-    {% endif %}
-    {% endfor %}
-</body>
-
+    {% endif %} {% endfor %}
+  </body>
 </html>
