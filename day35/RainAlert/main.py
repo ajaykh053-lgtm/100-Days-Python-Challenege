@@ -9,12 +9,12 @@ TWILIO_SID = os.environ["TWILIO_SID"]
 TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
 WEATHER_API = os.environ["WEATHER_API"]
 API_KEY = os.environ["API_KEY"]
-#mine
+# mine
 # "lat": 14.403139,
 # "lon": 76.437060,this is where i live here not raining
 # 25.0759
 # 121.3145this is where currently raining todaay now
-#if you did't gt email try to find place where its gonna rain from google add there lat & lon you will get email for sure.
+# if you did't gt email try to find place where its gonna rain from google add there lat & lon you will get email for sure.
 parameter = {
     "lat": 14.403139,
     "lon": 76.437060,
