@@ -4,11 +4,12 @@ from player import Player
 from car_manager import CarManager
 from scoreboard import Scoreboard
 from desing import Desing
+
 screen = Screen()
 screen.setup(width=1200, height=600)
 screen.title("Turtle Crossing Game")
 screen.tracer(0)
-desing=Desing()
+desing = Desing()
 desing.Road()
 player = Player()
 car_manager = CarManager()
