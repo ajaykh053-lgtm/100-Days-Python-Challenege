@@ -4,11 +4,12 @@ from food import Food
 from Scoreboard import Scoreboard
 import time
 
-
 screen = Screen()
 screen.setup(width=700, height=700)
 screen.bgcolor("white")
-screen.addshape("C:/Users/ajayk/OneDrive/ドキュメント/Python/day24/ImprovedSnakeGame/snakebg.gif")
+screen.addshape(
+    "C:/Users/ajayk/OneDrive/ドキュメント/Python/day24/ImprovedSnakeGame/snakebg.gif"
+)
 screen.title("Snake game bulit by Ajay 🐍😁.")
 screen.tracer(0)
 snake = Snake()
@@ -36,11 +37,11 @@ while game_is_on:
         snake.Extend()
     if snake.head.xcor() > 350 or snake.head.xcor() < -350:
         score.reset()
-        
+
         snake.reset()
     for segment in snake.segments[1:]:
         if snake.head.distance(segment) < 10:
             score.reset()
-            
+
             snake.reset()
 screen.exitonclick()
