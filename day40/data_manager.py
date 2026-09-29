@@ -3,10 +3,12 @@ import requests
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 from pprint import pprint
+
 # Load environment variables from .env file
 load_dotenv()
 
 SHEETY_PRICES_ENDPOINT = os.environ["SHEETY_PRICES_ENDPOINT"]
+
 
 class DataManager:
 
@@ -23,20 +25,19 @@ class DataManager:
         data = response.json()["prices"]
         self.destination_data = data
         return self.destination_data
+
     def get_user_data(self):
-        respones = requests.get(url=os.environ['SHEETY_USER_ENDPOINT'],headers=self.Authorization)
+        respones = requests.get(
+            url=os.environ["SHEETY_USER_ENDPOINT"], headers=self.Authorization
+        )
         pprint(respones.text)
-        data = respones.json()['user']
+        data = respones.json()["user"]
         return data
 
     # ==================== Updated the price in the spreadsheet ====================
 
     def update_lowest_price(self, row_id, new_price):
-        new_data = {
-            "price": {
-                "lowestPrice": new_price
-            }
-        }
+        new_data = {"price": {"lowestPrice": new_price}}
         response = requests.put(
             url=f"{SHEETY_PRICES_ENDPOINT}/{row_id}",
             json=new_data,
