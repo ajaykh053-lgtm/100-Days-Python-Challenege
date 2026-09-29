@@ -52,7 +52,7 @@ sleep(1)
 driver.find_element(by=By.CLASS_NAME, value="btn-primary").click()  # Accept_cookies_btn
 sleep(1)
 # Step 4 — like all 20 dogs
-liked_dog=0
+liked_dog = 0
 for n in range(20):
     sleep(3)
     # Check for match popup first
