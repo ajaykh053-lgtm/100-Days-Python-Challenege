@@ -2,6 +2,7 @@ import os
 import requests
 import datetime as dt
 from dotenv import load_dotenv
+
 # from requests.auth import HTTPBasicAuth
 load_dotenv()
 GENDER = "male"
@@ -56,7 +57,7 @@ sheety_respones = requests.post(
     headers=Authorization,
 )
 # print(sheety_respones.text)
-#Add Graph
+# Add Graph
 graph_endpoint = f"https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs"
 graph_config = {
     "id": GRAPH_ID,
@@ -68,7 +69,7 @@ graph_config = {
 header = {"X-USER-TOKEN": PIXELA_TOKEN}
 respones = requests.post(url=graph_endpoint, json=graph_config, headers=header)
 print(respones.text)
-#ADD PIxel
+# ADD PIxel
 today = dt.date.today().strftime("%Y%m%d")
 pixel_creation_endpoint = f"{graph_endpoint}/{GRAPH_ID}"
 pixel_data = {
