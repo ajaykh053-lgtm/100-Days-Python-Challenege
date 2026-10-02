@@ -3,67 +3,14 @@ from tkinter import messagebox
 from random import choice, randint, shuffle
 import pyperclip
 import json
-
+import string 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 
 def generate_password():
-    letters = [
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "i",
-        "j",
-        "k",
-        "l",
-        "m",
-        "n",
-        "o",
-        "p",
-        "q",
-        "r",
-        "s",
-        "t",
-        "u",
-        "v",
-        "w",
-        "x",
-        "y",
-        "z",
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-        "I",
-        "J",
-        "K",
-        "L",
-        "M",
-        "N",
-        "O",
-        "P",
-        "Q",
-        "R",
-        "S",
-        "T",
-        "U",
-        "V",
-        "W",
-        "X",
-        "Y",
-        "Z",
-    ]
-    numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    symbols = ["!", "#", "$", "%", "&", "(", ")", "*", "+"]
+    letters = string.ascii_lowercase + string.ascii_uppercase
+    numbers = string.digits
+    symbols = string.punctuation
 
     password_letters = [choice(letters) for _ in range(randint(8, 10))]
     password_symbols = [choice(symbols) for _ in range(randint(2, 4))]
@@ -95,32 +42,26 @@ def save():
             title="Oops", message="Please make sure you haven't left any fields empty."
         )
     else:
-        try:
+        with open(
+            "day29/password-manager-start/data.json",
+            "r",
+        ) as data_file:
+            # Reading old data
+            data = json.load(data_file)
+        if new_data not in data :
             with open(
-                "C:/Users/ajayk/OneDrive/ドキュメント/Python/day29and30/password-manager-start/data.json",
-                "r",
-            ) as data_file:
-                # Reading old data
-                data = json.load(data_file)
-        except FileNotFoundError:
-            with open(
-                "C:/Users/ajayk/OneDrive/ドキュメント/Python/day29and30/password-manager-start/data.json",
+                "day29/password-manager-start/data.json",
                 "w",
             ) as data_file:
                 json.dump(new_data, data_file, indent=4)
         else:
             # Updating old data with new data
             data.update(new_data)
-
-            with open(
-                "C:/Users/ajayk/OneDrive/ドキュメント/Python/day29and30/password-manager-start/data.json",
-                "w",
-            ) as data_file:
+            with open("day29/password-manager-start/data.json","w",) as data_file:
                 # Saving updated data
                 json.dump(data, data_file, indent=4)
-        finally:
-            website_entry.delete(0, END)
-            password_entry.delete(0, END)
+    website_entry.delete(0, END)
+    password_entry.delete(0, END)
 
 
 # ---------------------------- FIND PASSWORD ------------------------------- #
@@ -128,12 +69,12 @@ def find_password():
     website = website_entry.get()
     try:
         with open(
-            "C:/Users/ajayk/OneDrive/ドキュメント/Python/day29and30/password-manager-start/data.json"
+            "day29/password-manager-start/data.json"
         ) as data_file:
             data = json.load(data_file)
     except FileNotFoundError:
         messagebox.showinfo(title="Error", message="No Data File Found.")
-    else:
+    finally:
         if website in data:
             email = data[website]["email"]
             password = data[website]["password"]
@@ -145,7 +86,6 @@ def find_password():
                 title="Error", message=f"No details for {website} exists."
             )
 
-
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -153,7 +93,7 @@ window.title("Password Manager")
 window.config(padx=50, pady=50)
 
 canvas = Canvas(height=200, width=200)
-logo_img = PhotoImage(file="day29and30/password-manager-start/logo.png")
+logo_img = PhotoImage(file="day29/password-manager-start/logo.png")
 canvas.create_image(100, 100, image=logo_img)
 canvas.grid(row=0, column=1)
 
