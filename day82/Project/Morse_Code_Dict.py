@@ -44,4 +44,3 @@ MORSE_CODE_DICT = {
     ")": "-.--.-",
 }
 REVERSED_MORSE_CODE_DICT = {v: k for k, v in MORSE_CODE_DICT.items()}
-print(f" {len(MORSE_CODE_DICT)} {len(REVERSED_MORSE_CODE_DICT)}")
