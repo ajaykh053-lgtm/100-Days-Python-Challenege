@@ -11,7 +11,7 @@ WORK_MIN = 1
 SHORT_BREAK_MIN = 1
 LONG_BREAK_MIN = 1
 reps = 0
-timer = None
+timer = "35"
 
 
 # ---------------------------- TIMER RESET ------------------------------- #
@@ -82,7 +82,7 @@ rigth_mark.grid(row=4, column=2)
 
 canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
 tomato_img = PhotoImage(
-    file="C:/Users/ajayk/OneDrive/ドキュメント/Python/day28/promodoroapp/tomato.png"
+    file="day28/promodoroapp/tomato.png"
 )
 canvas.create_image(100, 110, image=tomato_img)
 timer_text = canvas.create_text(
