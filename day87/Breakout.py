@@ -49,7 +49,7 @@ def play():
         if (ball.Y_move < 0 and ball.ycor() < PAD_Y + 20
                 and abs(ball.xcor() - paddle.xcor()) < 70):
             offset = (ball.xcor() - paddle.xcor()) / 60
-            ball.X_move = max(-7, min(7, offset * 7)) or 2
+            ball.X_move = max(-7, min(7, offset * 7)) or 2 #type:ignore
             ball.Y_move = abs(ball.Y_move)
             ball.sety(PAD_Y + 20)
             ball.speed_up()
