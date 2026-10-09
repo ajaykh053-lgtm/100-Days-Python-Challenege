@@ -6,7 +6,7 @@ import time
 import turtle
 
 screen = Screen()
-image = "C:/Users/ajayk/OneDrive/ドキュメント/Python/day20and21/SnakeGame/snakebg.gif"
+image = "day20and21/SnakeGame/snakebg.gif"
 screen.addshape(image)
 turtle.shape(image)
 screen.title("Snake game bulit by Ajay 🐍😁")
