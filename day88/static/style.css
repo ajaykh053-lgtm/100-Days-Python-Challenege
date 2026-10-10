@@ -1,0 +1,27 @@
+h1{
+    border: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 40vh;
+    
+}
+
+.buttons{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+}
+.buttons button{
+    background-color: blueviolet;
+    height: 30px;
+    width: max-content;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.buttons a{
+    padding: 20px;
+}
