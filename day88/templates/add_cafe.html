@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block title %} Add Cafe {% endblock title %} {%
+block style %}
+<link rel="stylesheet" href="../static/style.css" />
+{% endblock style %} {% block content %}
+<div class="addcontainer">
+  <h1>Add new cafe into database</h1>
+  {% from 'bootstrap5/form.html' import render_form %}
+  {{render_form(form,novalidate=True)}}
+  <p>
+    <a href="{{url_for('cafes')}}">See the cafe list </a>
+  </p>
+</div>
+{% endblock %}
