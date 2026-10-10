@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block title %} Cafes {% endblock title %} {% block
+content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>All Cafes</h1>
+      <div class="table-responsive table-card">
+        <table class="table table-striped" data-bs-theme="dark">
+          <thead>
+            <tr>
+              {% for heading in header_columns %}
+              <th scope="col">{{heading}}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in cafes %}
+            <tr>
+              {% for item in row %}
+              <!-- Fix 1: Use Flask/Jinja2 standard assignment -->
+              {% set item_str = item | string %}
+
+              <!-- Fix 2: Check safely using the string conversion -->
+              {% if "https" in item_str %}
+              <td><a href="{{ item }}" target="_blank">Maplink</a></td>
+              {% else %}
+              <td>{{ item }}</td>
+              {% endif %} {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p><a href="{{url_for('index')}}">Retrun to index page</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
