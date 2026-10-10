@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% block title %} Cafe and Wifi {% endblock title %}
+{% block content %}
+<h1 class="heading">Welcome to the Cafe & Wifi</h1>
+<div class="buttons">
+  <a href="{{url_for('cafes')}}"><button type="button">Cafes</button></a>
+  <a href="{{url_for('add_cafe')}}"><button type="button">Add Cafes</button></a>
+</div>
+{% endblock %}
